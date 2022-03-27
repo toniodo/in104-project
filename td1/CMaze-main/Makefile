@@ -1,9 +1,5 @@
-CC=gcc
-CFLAGS=-W -Wall -ansi -pedantic -std=c99 -g
-INC=-I include/
-EXEC=dfs
-all: $(EXEC)
-dfs: dfs.c article.o
+CC = gcc
+CFLAGS = -Wall -Wfatal-errors -Werror
 
-clean:
-rm -rf *.o
+solveur : *.c
+	@$(CC) $(CFLAGS) -o solveur *.c
