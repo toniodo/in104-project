@@ -1,8 +1,17 @@
 CC = gcc
 CFLAGS = -Wall -Wfatal-errors -Werror
 
-solveur : *.c
-	@$(CC) $(CFLAGS) -o solveur *.c
+SRCS = $(wildcard *.c)
+BINS = solveur
+INCLUDES = $(SRCS:%.c=%)
 
-clean :
-	@rm -rf solveur
+all: $(BINS)
+
+solveur: $(SRCS:%.c=%.o)
+	$(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.c
+	@$(CC) -c $<
+
+clean:
+	@rm -rf solveur *.o
