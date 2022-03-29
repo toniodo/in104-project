@@ -8,10 +8,10 @@ INCLUDES = $(SRCS:%.c=%)
 all: $(BINS)
 
 solveur: $(SRCS:%.c=%.o)
-	$(CC) $(CFLAGS) -o $@ $^
+	@$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c
-	@$(CC) -c $<
+	$(CC) $(CFLAGS) -c $^
 
 clean:
 	@rm -rf solveur *.o
