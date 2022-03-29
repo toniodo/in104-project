@@ -1,18 +1,20 @@
 #include "mazeEnv.h"
 
-int qlearning(int row, int col){
-    int* current = &visited[row][col];
-    if(*current ==goal){
+int qlearning(int row, int col)
+{
+    int *current = &visited[row][col];
+    if (*current == goal)
+    {
         return 1;
-    }else if(*current == unknown){
+    }
+    else if (*current == unknown)
+    {
         *current = known;
-
-        
     }
 }
 
-
-int main(){
+int main()
+{
     maze_make("maze.txt");
     init_visited();
 

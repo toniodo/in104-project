@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char** maze;
-int** visited;
+char **maze;
+int **visited;
 int rows;
 int cols;
 
@@ -19,32 +19,34 @@ int state_col;
 int goal_row;
 int goal_col;
 
-enum terrain{
-    unknown,
-    wall,
-    known,
-    goal,
-    crumb
+enum terrain
+{
+  unknown,
+  wall,
+  known,
+  goal,
+  crumb
 };
 /* 4 actions possibles dans un labyrinthe*/
 /* number_actions: obtenir le nombre total d'actions possibles*/
-enum action{
-     up,
-     down,
-     left,
-     right,
-     number_actions 
+enum action
+{
+  up,
+  down,
+  left,
+  right,
+  number_actions
 };
- 
-typedef enum action action ;
+
+typedef enum action action;
 
 /* output of an agent : new state s'*/
-struct envOutput{
+struct envOutput
+{
   int new_col;
   int new_row;
   int reward;
   int done;
-
 };
 
 typedef struct envOutput envOutput;
@@ -52,16 +54,16 @@ typedef struct envOutput envOutput;
 void alloc_maze();
 
 /*Creer un tableau pour représenter un labyrinthe à partir d'un fichier*/
-void maze_make(char* );
+void maze_make(char *);
 
 /*afficher un labyrinthe sur un terminal*/
-void maze_render(); 
+void maze_render();
 
 /*remettre l'agent à la position initiale*/
 void maze_reset();
 
 /*executer une action a et observer la récompense et le nouvel état*/
-envOutput maze_step(action a); 
+envOutput maze_step(action a);
 
 /*Choisir une action au hasard */
 action env_action_sample();
