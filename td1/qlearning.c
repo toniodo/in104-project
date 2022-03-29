@@ -1,4 +1,17 @@
+#include "qlearning.h"
 #include "mazeEnv.h"
+#include "functions.h"
+
+void q_alloc()
+{ // Make an array for all possible states
+    qfunction = malloc(rows * cols * sizeof(double *));
+    actions = 4;
+    for (int i = 0; i < rows * cols; i++)
+    {
+        // For each state, there are limited possibilities of actions
+        qfunction[i] = malloc(actions * sizeof(double));
+    }
+}
 
 int qlearning(int row, int col)
 {
