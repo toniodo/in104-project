@@ -16,11 +16,15 @@ void q_initialisation()
 { // Initialisation random values
     for (int i = 0; i < rows * cols; i++)
     {
-        for (int j = 0; j < number_actions, j++)
+        for (int j = 0; j < number_actions; j++)
         {
-            qfunction[i][j] = random();
+            qfunction[i][j] = rand() / RAND_MAX;
         }
     }
+    qfunction[goal_row * rows + goal_col][0] = 0;
+    qfunction[goal_row * rows + goal_col][1] = 0;
+    qfunction[goal_row * rows + goal_col][2] = 0;
+    qfunction[goal_row * rows + goal_col][3] = 0;
 }
 
 int qlearning(int row, int col)
@@ -32,11 +36,14 @@ int qlearning(int row, int col)
         return 1;
     case unknown:
         *current = known;
+    default:
+        return 0;
     }
 }
 
 int main()
 {
+    srand(time(0));
     maze_make("maze.txt");
     init_visited();
 
