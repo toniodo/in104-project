@@ -5,6 +5,5 @@
 #include <stdlib.h>
 
 double **qfunction;
-int actions;
 
 #endif

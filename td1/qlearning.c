@@ -5,23 +5,32 @@
 void q_alloc()
 { // Make an array for all possible states
     qfunction = malloc(rows * cols * sizeof(double *));
-    actions = 4;
     for (int i = 0; i < rows * cols; i++)
     {
         // For each state, there are limited possibilities of actions
-        qfunction[i] = malloc(actions * sizeof(double));
+        qfunction[i] = malloc(number_actions * sizeof(double));
+    }
+}
+
+void q_initialisation()
+{ // Initialisation random values
+    for (int i = 0; i < rows * cols; i++)
+    {
+        for (int j = 0; j < number_actions, j++)
+        {
+            qfunction[i][j] = random();
+        }
     }
 }
 
 int qlearning(int row, int col)
 {
     int *current = &visited[row][col];
-    if (*current == goal)
+    switch (*current)
     {
+    case goal:
         return 1;
-    }
-    else if (*current == unknown)
-    {
+    case unknown:
         *current = known;
     }
 }
