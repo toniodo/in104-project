@@ -107,33 +107,69 @@ envOutput maze_step(action a)
     int done = 0;
     envOutput stepOut;
 
-    if (a == up)
+    int new_cols = state_col;
+    int new_rows = state_row;
+
+    switch (a)
     {
-        state_row = max(0, state_row - 1);
-    }
-    else if (a == down)
-    {
-        state_row = min(rows, state_row + 1);
-    }
-    else if (a == right)
-    {
-        state_col = min(cols, state_col + 1);
-    }
-    else if (a == left)
-    {
-        state_col = max(0, state_col - 1);
+    case up:
+        new_rows = max(0, state_row - 1);
+        break;
+
+    case down:
+        new_rows = min(rows, state_row + 1);
+        break;
+
+    case right:
+        new_cols = min(cols, state_col + 1);
+        break;
+
+    case left:
+        new_cols = max(0, state_col - 1);
+        break;
+
+    case number_actions:
+    default:
+        break;
     }
 
-    if ((state_row == goal_row) && (state_col == goal_col))
+    if (visited[new_rows][new_cols] == goal)
     {
         reward = 1;
         done = 1;
+        state_col = new_cols;
+        state_row = new_rows;
+        stepOut.new_col = state_col;
+        stepOut.new_row = state_row;
+    }
+
+    else if (visited[new_rows][new_cols] == wall)
+    {
+        reward = -1;
+        stepOut.new_col = state_col;
+        stepOut.new_row = state_row;
+    }
+
+    else if (visited[new_rows][new_cols] == crumb)
+    {
+        reward = -0.01;
+        state_col = new_cols;
+        state_row = new_rows;
+        stepOut.new_col = state_col;
+        stepOut.new_row = state_row;
+    }
+
+    else
+    {
+        reward = 0.1;
+        state_col = new_cols;
+        state_row = new_rows;
+        stepOut.new_col = state_col;
+        stepOut.new_row = state_row;
     }
 
     stepOut.reward = reward;
     stepOut.done = done;
-    stepOut.new_col = state_col;
-    stepOut.new_row = state_row;
 
     return stepOut;
 }

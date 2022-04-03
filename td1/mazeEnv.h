@@ -45,7 +45,7 @@ struct envOutput
 {
   int new_col;
   int new_row;
-  int reward;
+  float reward;
   int done;
 };
 
