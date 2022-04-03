@@ -15,9 +15,18 @@ int imaxlist(double *list, int nmax){
     int indice=0;
     for (int i;i<nmax;i++){
         if (list[i]>max){
-            max=list[i];
             indice=i;
         }
     }
     return(indice);
+}
+
+double maxlist(double *list, int nmax){
+    double max=list[0];
+    for (int i=0;i<nmax;i++){
+        if (list[i]>max){
+            max=list[i];
+        }
+    }
+    return(max);
 }
