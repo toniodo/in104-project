@@ -1,6 +1,6 @@
 #include "functions.h"
 
-int min(int a, int b)
+int min(int a,int b)
 {
     return (a > b) ? b : a;
 }
@@ -8,4 +8,16 @@ int min(int a, int b)
 int max(int a, int b)
 {
     return (a > b) ? a : b;
+}
+
+int imaxlist(double *list, int nmax){
+    double max=list[0];
+    int indice=0;
+    for (int i;i<nmax;i++){
+        if (list[i]>max){
+            max=list[i];
+            indice=i;
+        }
+    }
+    return(indice);
 }
