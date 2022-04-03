@@ -1,6 +1,7 @@
 #include "qlearning.h"
 #include "mazeEnv.h"
 #include "functions.h"
+#include <time.h>
 
 void q_alloc()
 { // Make an array for all possible states
@@ -18,27 +19,73 @@ void q_initialisation()
     {
         for (int j = 0; j < number_actions; j++)
         {
-            qfunction[i][j] = rand() / RAND_MAX;
+            qfunction[i][j] = ((float)rand()) / RAND_MAX / 2.;
         }
     }
-    qfunction[goal_row * rows + goal_col][0] = 0;
-    qfunction[goal_row * rows + goal_col][1] = 0;
-    qfunction[goal_row * rows + goal_col][2] = 0;
-    qfunction[goal_row * rows + goal_col][3] = 0;
+    // Set reward of goal
+    qfunction[goal_row * cols + goal_col][0] = 0;
+    qfunction[goal_row * cols + goal_col][1] = 0;
+    qfunction[goal_row * cols + goal_col][2] = 0;
+    qfunction[goal_row * cols + goal_col][3] = 0;
 }
 
-int qlearning(int row, int col)
+int policy_max(int state)
 {
-    int *current = &visited[row][col];
-    switch (*current)
+    return imaxlist(qfunction[state], number_actions);
+}
+
+int policy_greedy(int state, float epsi)
+{
+    int actio = 0;
+    float alea = ((float)rand()) / RAND_MAX;
+    if (alea > (1 - epsi))
     {
-    case goal:
-        return 1;
-    case unknown:
-        *current = known;
-    default:
-        return 0;
+        actio = env_action_sample();
     }
+    else
+    {
+        actio = imaxlist(qfunction[state], number_actions);
+    }
+    return actio;
+}
+
+int qlearning()
+{
+    envOutput stepOutput;
+    double eps = 0.5;
+    double gamma = 0.9;
+    double alpha = 0.5;
+    int state = start_row * cols + start_col;
+    int new_state = state;
+    int act = 0;
+    int reward = 0;
+    while ((state != goal_row * cols + goal_col))
+    {
+        act = policy_greedy(state, eps);
+        stepOutput = maze_step(act);
+        reward = stepOutput.reward;
+        new_state = stepOutput.new_row * cols + stepOutput.new_col;
+        qfunction[state][act] += alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions) - qfunction[state][act]);
+        // printf("%f\n", qfunction[state][act]);
+        state = new_state;
+        visited[stepOutput.new_row][stepOutput.new_col] = crumb;
+    }
+    return 1;
+}
+
+void add_crumbs()
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            if (visited[i][j] == crumb)
+            {
+                maze[i][j] = '.';
+            }
+        }
+    }
+    maze[start_row][start_col] = 's';
 }
 
 int main()
@@ -46,7 +93,14 @@ int main()
     srand(time(0));
     maze_make("maze.txt");
     init_visited();
-
+    maze_reset();
     printf("%d, %d \n", rows, cols);
     printf("number of actions : %d \n", number_actions);
+    maze_render();
+    q_alloc();
+    q_initialisation();
+    qlearning(rows, cols);
+    add_crumbs();
+    maze_render();
+    return 0;
 }
