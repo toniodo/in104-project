@@ -57,24 +57,31 @@ int state_from_pos(int row, int col)
 int qlearning()
 {
     envOutput stepOutput;
+    // initialisation of qlearning parameters
     double eps = 0.5;
     double gamma = 0.9;
     double alpha = 0.5;
     int max_step = 1000;
+    // initialisation of a counter
     int cpt = 0;
+    // initialisation index of start position
     int state = state_from_pos(start_row, start_col);
     int new_state;
+    // initialisation of action
     int act = 0;
     int reward = 0;
     while ((state != state_from_pos(goal_row, goal_col)) && cpt < max_step)
     {
+        // action according to policy
         act = policy_greedy(state, eps);
+        // response created by the action taken
         stepOutput = maze_step(act);
         reward = stepOutput.reward;
         new_state = state_from_pos(stepOutput.new_row, stepOutput.new_col);
         qfunction[state][act] += alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions) - qfunction[state][act]);
         // printf("%f\n", qfunction[state][act]);
         state = new_state;
+        // actualisation of the visited matrix
         visited[stepOutput.new_row][stepOutput.new_col] = crumb;
         cpt++;
     }
