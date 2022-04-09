@@ -119,6 +119,8 @@ int main()
     // initialise qlearning matrix
     q_alloc();
     q_initialisation();
+    printf("initial head of qfunction (random) :\n");
+    show_matrix(qfunction, 20, number_actions);
 
     char input = 'y';
     // training loop, continue if y or enter pressed
@@ -138,8 +140,10 @@ int main()
         add_crumbs();
         maze_render();
         // show full qmatrix
-        // printf("qfunction :\n")
-        // show_matrix(qfunction, state_from_pos(rows - 1, cols), number_actions);
+        /*
+        printf("qfunction :\n")
+        show_matrix(qfunction, state_from_pos(rows - 1, cols), number_actions);
+        */
         // show head of qmatrix
         printf("head of qfunction :\n");
         show_matrix(qfunction, 20, number_actions);
