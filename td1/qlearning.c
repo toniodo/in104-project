@@ -49,6 +49,11 @@ int policy_greedy(int state, float epsi)
     return actio;
 }
 
+int state_from_pos(int row, int col)
+{
+    return row * cols + col;
+}
+
 int qlearning()
 {
     envOutput stepOutput;
@@ -57,16 +62,16 @@ int qlearning()
     double alpha = 0.5;
     int max_step = 1000;
     int cpt = 0;
-    int state = start_row * cols + start_col;
-    int new_state = state;
+    int state = state_from_pos(start_row, start_col);
+    int new_state;
     int act = 0;
     int reward = 0;
-    while ((state != goal_row * cols + goal_col) && cpt < max_step)
+    while ((state != state_from_pos(goal_row, goal_col)) && cpt < max_step)
     {
         act = policy_greedy(state, eps);
         stepOutput = maze_step(act);
         reward = stepOutput.reward;
-        new_state = stepOutput.new_row * cols + stepOutput.new_col;
+        new_state = state_from_pos(stepOutput.new_row, stepOutput.new_col);
         qfunction[state][act] += alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions) - qfunction[state][act]);
         // printf("%f\n", qfunction[state][act]);
         state = new_state;
