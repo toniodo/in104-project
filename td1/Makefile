@@ -1,17 +1,24 @@
 CC = gcc
 CFLAGS = -Wall -Wfatal-errors -Werror
 
-SRCS = $(wildcard *.c)
-BINS = solveur
-INCLUDES = $(SRCS:%.c=%)
+#SRCS = $(wildcard *.c)
+DEPENDENCIES = functions.c mazeEnv.c
+BINS = solveur dfs
 
 all: $(BINS)
 
-solveur: $(SRCS:%.c=%.o)
-	@$(CC) $(CFLAGS) -o $@ $^
+
+solveur: $(DEPENDENCIES:%.c=%.o) qlearning.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+dfs: $(DEPENDENCIES:%.c=%.o) dfs.o
+	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $^
+	@$(CC) $(CFLAGS) -c $^
 
-clean:
-	@rm -rf solveur *.o
+clean_objects:
+	@rm -rf *.o
+
+clean: clean_objects
+	@rm -rf solveur dfs
