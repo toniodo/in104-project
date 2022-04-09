@@ -137,7 +137,12 @@ int main()
         // complete maze with crumbs and print it
         add_crumbs();
         maze_render();
-        show_matrix(qfunction, state_from_pos(rows - 1, cols), number_actions);
+        // show full qmatrix
+        // printf("qfunction :\n")
+        // show_matrix(qfunction, state_from_pos(rows - 1, cols), number_actions);
+        // show head of qmatrix
+        printf("head of qfunction :\n");
+        show_matrix(qfunction, 20, number_actions);
 
         // waiting for action
         scanf("%c", &input);

@@ -44,6 +44,8 @@ void show_matrix(double **mat, int n, int m)
     {
         for (int j = 0; j < m; j++)
         {
+            if (mat[i][j] >= 0.)
+                printf(" ");
             printf("%.3f ", mat[i][j]);
         }
         printf("\n");
