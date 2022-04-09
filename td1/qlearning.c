@@ -137,6 +137,7 @@ int main()
         // complete maze with crumbs and print it
         add_crumbs();
         maze_render();
+        show_matrix(qfunction, state_from_pos(rows - 1, cols), number_actions);
 
         // waiting for action
         scanf("%c", &input);
