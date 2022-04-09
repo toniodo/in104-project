@@ -91,32 +91,49 @@ void add_crumbs()
     maze[start_row][start_col] = 's';
 }
 
+void remove_crumbs()
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            if (maze[i][j] == '.')
+            {
+                maze[i][j] = ' ';
+            }
+        }
+    }
+}
+
 int main()
 {
     srand(time(0));
+    // create maze from file
     maze_make("maze.txt");
-    int initialised = 0;
-    char input = 'y';
 
-    // training loop
+    // initialise qlearning matrix
+    q_alloc();
+    q_initialisation();
+
+    char input = 'y';
+    // training loop, continue if y or enter pressed
     while (input == 'y' || input == '\n')
     {
+        // initialise maze
         init_visited();
         maze_reset();
+        remove_crumbs();
+        // print maze
         printf("%d, %d \n", rows, cols);
         printf("number of actions : %d \n", number_actions);
         maze_render();
-        if (!initialised)
-        {
-            q_alloc();
-            q_initialisation();
-            initialised = 1;
-        }
+        // learn
         qlearning(rows, cols);
+        // complete maze with crumbs and print it
         add_crumbs();
         maze_render();
 
-        // pause
+        // waiting for action
         scanf("%c", &input);
     }
     return 0;
