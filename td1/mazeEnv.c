@@ -133,34 +133,32 @@ envOutput maze_step(action a)
         break;
     }
 
-    if (visited[new_rows][new_cols] == goal)
+    switch (visited[new_rows][new_cols])
     {
+    case goal:
         reward = 1;
         done = 1;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;
         stepOut.new_row = state_row;
-    }
+        break;
 
-    else if (visited[new_rows][new_cols] == wall)
-    {
+    case wall:
         reward = -1;
         stepOut.new_col = state_col;
         stepOut.new_row = state_row;
-    }
+        break;
 
-    else if (visited[new_rows][new_cols] == crumb)
-    {
+    case crumb:
         reward = -0.01;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;
         stepOut.new_row = state_row;
-    }
+        break;
 
-    else
-    {
+    default:
         reward = 0.1;
         state_col = new_cols;
         state_row = new_rows;
