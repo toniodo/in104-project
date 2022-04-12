@@ -19,7 +19,7 @@ void q_initialisation()
     {
         for (int j = 0; j < number_actions; j++)
         {
-            qfunction[i][j] = ((float)rand()) / RAND_MAX / 2.;
+            qfunction[i][j] = ((float)rand()) / RAND_MAX;
             // qfunction[i][j] = 0;
         }
     }
@@ -30,16 +30,16 @@ void q_initialisation()
     qfunction[goal_row * cols + goal_col][3] = 0;
 }
 
-int policy_max(int state)
+int policy_greedy(int state)
 {
     return imaxlist(qfunction[state], number_actions);
 }
 
-int policy_greedy(int state, float epsi)
+int policy_epsgreedy(int state, float epsi)
 {
     int actio = 0;
     float alea = ((float)rand()) / RAND_MAX;
-    if (alea > (1 - epsi))
+    if (alea < (1 - epsi))
     {
         actio = env_action_sample();
     }
@@ -80,7 +80,7 @@ int qlearning()
     while ((state != state_from_pos(goal_row, goal_col)) && cpt < max_step)
     {
         // action according to policy
-        act = policy_greedy(state, eps);
+        act = policy_epsgreedy(state, eps);
         // response created by the action taken
         stepOutput = maze_step(act);
         reward = stepOutput.reward;
