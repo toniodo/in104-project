@@ -130,7 +130,8 @@ envOutput maze_step(action a)
 
     case number_actions:
     default:
-        break;
+        new_cols = state_col;
+        new_rows = state_row;
     }
 
     switch (visited[new_rows][new_cols])
