@@ -145,7 +145,7 @@ envOutput maze_step(action a)
         break;
 
     case wall:
-        reward = -1;
+        reward = -0.5;
         stepOut.new_col = state_col;
         stepOut.new_row = state_row;
         break;

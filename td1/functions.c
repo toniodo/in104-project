@@ -42,6 +42,7 @@ void show_matrix(double **mat, int n, int m)
 {
     for (int i = 0; i < n; i++)
     {
+        printf("%d  ", i);
         for (int j = 0; j < m; j++)
         {
             if (mat[i][j] >= 0.)

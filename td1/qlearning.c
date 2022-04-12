@@ -20,6 +20,7 @@ void q_initialisation()
         for (int j = 0; j < number_actions; j++)
         {
             qfunction[i][j] = ((float)rand()) / RAND_MAX / 2.;
+            // qfunction[i][j] = 0;
         }
     }
     // Set reward of goal
@@ -54,14 +55,20 @@ int state_from_pos(int row, int col)
     return row * cols + col;
 }
 
+void pos_from_state(int state, int *row, int *col)
+{
+    *row = state / cols;
+    *col = state % cols;
+}
+
 int qlearning()
 {
     envOutput stepOutput;
     // initialisation of qlearning parameters
-    double eps = 0.5;
+    double eps = 0.9;
     double gamma = 0.9;
     double alpha = 0.5;
-    int max_step = 1000;
+    int max_step = 20000;
     // initialisation of a counter
     int cpt = 0;
     // initialisation index of start position
@@ -97,10 +104,12 @@ void add_crumbs()
             if (visited[i][j] == crumb)
             {
                 maze[i][j] = '.';
+                printf("%d ", state_from_pos(i, j));
             }
         }
     }
     maze[start_row][start_col] = 's';
+    printf("\n");
 }
 
 void remove_crumbs()
@@ -153,7 +162,8 @@ int main()
         */
         // show head of qmatrix
         printf("head of qfunction :\n");
-        show_matrix(qfunction, 20, number_actions);
+        printf("     up    down   left   right\n");
+        show_matrix(qfunction, 40, number_actions);
 
         // waiting for action
         scanf("%c", &input);
