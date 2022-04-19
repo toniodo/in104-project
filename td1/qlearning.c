@@ -68,7 +68,7 @@ int qlearning()
     double eps = 0.3;
     double gamma = 0.9;
     double alpha = 0.5;
-    int max_step = 100000;
+    int max_step = 1000;
     // initialisation of a counter
     int cpt = 0;
     // initialisation index of start position
@@ -76,7 +76,7 @@ int qlearning()
     int new_state;
     // initialisation of action
     int act = 0;
-    int reward = 0;
+    double reward = 0;
     while (cpt < max_step)
     {
         // action according to policy
@@ -84,16 +84,24 @@ int qlearning()
         // response created by the action taken
         stepOutput = maze_step(act);
         reward = stepOutput.reward;
-        // printf("%d\n", reward);
+        printf("J'ai gagné une récompense de %.2f\n", reward);
         new_state = state_from_pos(stepOutput.new_row, stepOutput.new_col);
-        qfunction[state][act] += alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions) - qfunction[state][act]);
+        double update = alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions) - qfunction[state][act]);
+        printf("test : %.3f\n", update);
+        qfunction[state][act] = qfunction[state][act] + update;
+        printf("\nNotre valeur de Q : %.2f", qfunction[state][act]);
         // printf("%f\n", qfunction[state][act]);
+        // printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], number_actions));
         state = new_state;
+        // Actualisation of global variable
+        state_row = stepOutput.new_row;
+        state_col = stepOutput.new_col;
         // actualisation of the visited matrix
         visited[stepOutput.new_row][stepOutput.new_col] = crumb;
         if (stepOutput.done)
             break;
         cpt++;
+        // show_matrix(qfunction, rows * cols - 1, number_actions);
     }
     printf("Le compteur : %d\n", cpt);
     return 1;
@@ -167,7 +175,9 @@ int main()
         // show head of qmatrix
         printf("head of qfunction :\n");
         printf("     up    down   left   right\n");
-        show_matrix(qfunction, 40, number_actions);
+        show_matrix(qfunction, rows * cols - 1, number_actions);
+        maze_render();
+        printf("%d %d", rows, cols);
 
         // waiting for action
         scanf("%c", &input);

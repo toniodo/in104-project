@@ -103,7 +103,7 @@ void maze_reset()
 
 envOutput maze_step(action a)
 {
-    int reward = 0;
+    double reward = 0;
     int done = 0;
     envOutput stepOut;
 
@@ -152,7 +152,7 @@ envOutput maze_step(action a)
         break;
 
     case crumb:
-        reward = -0.01;
+        reward = 0.0;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;
@@ -160,7 +160,7 @@ envOutput maze_step(action a)
         break;
 
     default:
-        reward = 0.1;
+        reward = -0.01;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;
