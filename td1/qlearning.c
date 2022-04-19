@@ -19,8 +19,8 @@ void q_initialisation()
     {
         for (int j = 0; j < number_actions; j++)
         {
-            qfunction[i][j] = ((float)rand()) / RAND_MAX;
-            // qfunction[i][j] = 0;
+            // qfunction[i][j] = ((float)rand()) / RAND_MAX;
+            qfunction[i][j] = 0;
         }
     }
     // Set reward of goal
@@ -39,7 +39,7 @@ int policy_epsgreedy(int state, float epsi)
 {
     int actio = 0;
     float alea = ((float)rand()) / RAND_MAX;
-    if (alea < (1 - epsi))
+    if (alea < epsi)
     {
         actio = env_action_sample();
     }
@@ -65,10 +65,10 @@ int qlearning()
 {
     envOutput stepOutput;
     // initialisation of qlearning parameters
-    double eps = 0.9;
+    double eps = 0.3;
     double gamma = 0.9;
     double alpha = 0.5;
-    int max_step = 20000;
+    int max_step = 100000;
     // initialisation of a counter
     int cpt = 0;
     // initialisation index of start position
@@ -77,21 +77,25 @@ int qlearning()
     // initialisation of action
     int act = 0;
     int reward = 0;
-    while ((state != state_from_pos(goal_row, goal_col)) && cpt < max_step)
+    while (cpt < max_step)
     {
         // action according to policy
         act = policy_epsgreedy(state, eps);
         // response created by the action taken
         stepOutput = maze_step(act);
         reward = stepOutput.reward;
+        // printf("%d\n", reward);
         new_state = state_from_pos(stepOutput.new_row, stepOutput.new_col);
         qfunction[state][act] += alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions) - qfunction[state][act]);
         // printf("%f\n", qfunction[state][act]);
         state = new_state;
         // actualisation of the visited matrix
         visited[stepOutput.new_row][stepOutput.new_col] = crumb;
+        if (stepOutput.done)
+            break;
         cpt++;
     }
+    printf("Le compteur : %d\n", cpt);
     return 1;
 }
 
