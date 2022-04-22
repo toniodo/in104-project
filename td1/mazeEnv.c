@@ -103,7 +103,7 @@ void maze_reset()
 
 envOutput maze_step(action a)
 {
-    int reward = 0;
+    float reward = 0;
     int done = 0;
     envOutput stepOut;
 
@@ -134,7 +134,8 @@ envOutput maze_step(action a)
         new_rows = state_row;
     }
 
-    switch (visited[new_rows][new_cols])
+    int tile = visited[new_rows][new_cols];
+    switch (tile)
     {
     case goal:
         reward = 1;
@@ -152,7 +153,7 @@ envOutput maze_step(action a)
         break;
 
     case crumb:
-        reward = -0.01;
+        // reward = -0.01;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;
@@ -160,7 +161,7 @@ envOutput maze_step(action a)
         break;
 
     default:
-        reward = 0.1;
+        // reward = 0.01;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;

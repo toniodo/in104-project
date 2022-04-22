@@ -76,7 +76,7 @@ int qlearning()
     int new_state;
     // initialisation of action
     int act = 0;
-    int reward = 0;
+    float reward = 0;
     while (cpt < max_step)
     {
         // action according to policy

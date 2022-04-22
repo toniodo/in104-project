@@ -11,6 +11,7 @@ int max(int a, int b)
     return (a > b) ? a : b;
 }
 
+// TODO : Remake get max for getting index and max in the same function & add random
 int imaxlist(double *list, int nmax)
 {
     double max = list[0];
