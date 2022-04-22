@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wfatal-errors -Werror
+CFLAGS = -Wall -Wfatal-errors -Werror -g
 
 #SRCS = $(wildcard *.c)
 DEPENDENCIES = functions.c mazeEnv.c
