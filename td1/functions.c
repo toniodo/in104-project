@@ -29,12 +29,14 @@ double maxlist(double *list, int nmax, bool index)
             // indice = i;
         }
     }
+    // random part
+    // Need to be revised : segmentation fault can appear
     alea = rand() % nmax;
     while (&listalea[alea - 1] == NULL)
     {
         alea = rand() % nmax;
     }
-    indice = list[alea];
+    indice = list[alea - 1];
     if (index)
         return indice;
     else
