@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "functions.h"
+#include <stdbool.h>
 
 int min(int a, int b)
 {
@@ -12,7 +13,7 @@ int max(int a, int b)
 }
 
 // TODO : Remake get max for getting index and max in the same function & add random
-int imaxlist(double *list, int nmax)
+double maxlist(double *list, int nmax, bool index)
 {
     double max = list[0];
     int indice = 0;
@@ -20,23 +21,14 @@ int imaxlist(double *list, int nmax)
     {
         if (list[i] > max)
         {
+            max = list[i];
             indice = i;
         }
     }
-    return (indice);
-}
-
-double maxlist(double *list, int nmax)
-{
-    double max = list[0];
-    for (int i = 0; i < nmax; i++)
-    {
-        if (list[i] > max)
-        {
-            max = list[i];
-        }
-    }
-    return (max);
+    if (index)
+        return indice;
+    else
+        return max;
 }
 
 void show_matrix(double **mat, int n, int m)

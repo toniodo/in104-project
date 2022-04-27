@@ -2,6 +2,7 @@
 #include "mazeEnv.h"
 #include "functions.h"
 #include <time.h>
+#include <stdbool.h>
 
 void q_alloc()
 { // Make an array for all possible states
@@ -32,7 +33,7 @@ void q_initialisation()
 
 int policy_greedy(int state)
 {
-    return imaxlist(qfunction[state], number_actions);
+    return maxlist(qfunction[state], number_actions, true);
 }
 
 int policy_epsgreedy(int state, float epsi)
@@ -45,7 +46,7 @@ int policy_epsgreedy(int state, float epsi)
     }
     else
     {
-        actio = imaxlist(qfunction[state], number_actions);
+        actio = maxlist(qfunction[state], number_actions, true);
     }
     return actio;
 }
@@ -86,12 +87,12 @@ int qlearning()
         reward = stepOutput.reward;
         printf("J'ai gagné une récompense de %.2f\n", reward);
         new_state = state_from_pos(stepOutput.new_row, stepOutput.new_col);
-        double update = alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions) - qfunction[state][act]);
+        double update = alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions, false) - qfunction[state][act]);
         printf("test : %.3f\n", update);
         qfunction[state][act] = qfunction[state][act] + update;
         printf("\nNotre valeur de Q : %.2f", qfunction[state][act]);
         // printf("%f\n", qfunction[state][act]);
-        // printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], number_actions));
+        // printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], number_actions,false));
         state = new_state;
         // Actualisation of global variable
         state_row = stepOutput.new_row;
