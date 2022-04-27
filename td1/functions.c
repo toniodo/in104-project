@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "functions.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
 int min(int a, int b)
 {
@@ -17,14 +18,23 @@ double maxlist(double *list, int nmax, bool index)
 {
     double max = list[0];
     int indice = 0;
+    int *listalea = malloc(sizeof(int) * nmax);
+    int alea;
     for (int i; i < nmax; i++)
     {
         if (list[i] > max)
         {
             max = list[i];
-            indice = i;
+            listalea[i] = i;
+            // indice = i;
         }
     }
+    alea = rand() % nmax;
+    while (&listalea[alea - 1] == NULL)
+    {
+        alea = rand() % nmax;
+    }
+    indice = list[alea];
     if (index)
         return indice;
     else
