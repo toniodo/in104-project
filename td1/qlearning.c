@@ -66,41 +66,49 @@ int qlearning()
 {
     envOutput stepOutput;
     // initialisation of qlearning parameters
-    double eps = 0.3;
-    double gamma = 0.9;
-    double alpha = 0.5;
-    int max_step = 1000;
+    // double eps = 0.3;
+    double gamma = 2;
+    double alpha = 0.8;
+    int max_step = 10000;
     // initialisation of a counter
     int cpt = 0;
     // initialisation index of start position
-    int state = state_from_pos(start_row, start_col);
+    state_row = start_row;
+    state_col = state_col;
+    int prev_state = state_from_pos(state_row, state_col);
     int new_state;
     // initialisation of action
     int act = 0;
     double reward = 0;
     while (cpt < max_step)
     {
+        // save previous state
+        prev_state = state_from_pos(state_row, state_col);
         // action according to policy
-        act = policy_epsgreedy(state, eps);
+        act = policy_greedy(prev_state);
+        printf("%d\n", act);
         // response created by the action taken
         stepOutput = maze_step(act);
         reward = stepOutput.reward;
-        printf("J'ai gagné une récompense de %.2f\n", reward);
-        new_state = state_from_pos(stepOutput.new_row, stepOutput.new_col);
-        double update = alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions, false) - qfunction[state][act]);
-        printf("test : %.3f\n", update);
-        qfunction[state][act] = qfunction[state][act] + update;
-        printf("\nNotre valeur de Q : %.2f", qfunction[state][act]);
-        // printf("%f\n", qfunction[state][act]);
-        // printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], number_actions,false));
-        state = new_state;
-        // Actualisation of global variable
-        state_row = stepOutput.new_row;
-        state_col = stepOutput.new_col;
-        // actualisation of the visited matrix
-        visited[stepOutput.new_row][stepOutput.new_col] = crumb;
+        // printf("J'ai gagné une récompense de %.2f\n", reward);
+        new_state = state_from_pos(state_row, state_col);
+        double update = alpha * (reward + gamma * maxlist(qfunction[new_state], number_actions, false) - qfunction[prev_state][act]);
+        // printf("test : %.3f\n", update);
+        // printf("%f\n", maxlist(qfunction[new_state], number_actions, true));
+        qfunction[prev_state][act] = qfunction[prev_state][act] + update;
+        // printf("\nNotre valeur de Q : %.2f", qfunction[prev_state][act]);
+        //  printf("%f\n", qfunction[state][act]);
+        //  printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], number_actions,false));
         if (stepOutput.done)
+        {
+            printf("Je suis arrivé !");
             break;
+        }
+        //  actualisation of the visited matrix
+        else
+        {
+            visited[stepOutput.new_row][stepOutput.new_col] = crumb;
+        }
         cpt++;
         // show_matrix(qfunction, rows * cols - 1, number_actions);
     }
@@ -179,7 +187,6 @@ int main()
         show_matrix(qfunction, rows * cols - 1, number_actions);
         maze_render();
         printf("%d %d", rows, cols);
-
         // waiting for action
         scanf("%c", &input);
     }
