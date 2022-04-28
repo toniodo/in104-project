@@ -18,42 +18,43 @@ double maxlist(double *list, int nmax, bool index)
 {
     double max = list[0];
     int indice = 0;
-    bool *listalea = malloc(sizeof(bool) * nmax);
-    int cpt = 0;
-    for (int i; i < nmax; i++)
+    // bool *listalea = malloc(sizeof(bool) * nmax);
+    // int cpt = 0;
+    for (int i = 0; i < nmax; i++)
     {
         if (list[i] > max)
         {
             max = list[i];
-            // indice = i;
-            cpt++;
+            indice = i;
         }
     }
-
-    for (int i = 0; i < nmax; i++)
-    {
-        if (list[i] == max)
+    /* a revoir
+        for (int i = 0; i < nmax; i++)
         {
-            listalea[i] = true;
+            if (list[i] == max)
+            {
+                listalea[i] = true;
+                cpt++;
+            }
         }
-    }
 
-    int length = cpt;
-    int j = 0;
-    int *ind = malloc(sizeof(int) * length);
-    while (cpt != 0)
-    {
-        if (listalea[j] == true)
+        int length = cpt;
+        int j = 0;
+        int *ind = malloc(sizeof(int) * length);
+        while (cpt != 0)
         {
-            ind[cpt - 1] = j;
-            cpt--;
+            if (listalea[j] == true)
+            {
+                ind[cpt - 1] = j;
+                cpt--;
+            }
+            j++;
         }
-        j++;
-    }
-    int alea = rand() % (length + 1);
-    indice = ind[alea - 1];
-    free(listalea);
-    free(ind);
+        int alea = rand() % (length);
+        indice = ind[alea];
+        free(listalea);
+        free(ind);
+    */
     if (index)
         return indice;
     else
