@@ -25,11 +25,19 @@ double maxlist(double *list, int nmax, bool index)
         if (list[i] > max)
         {
             max = list[i];
-            listalea[i] = true;
             // indice = i;
             cpt++;
         }
     }
+
+    for (int i = 0; i < nmax; i++)
+    {
+        if (list[i] == max)
+        {
+            listalea[i] = true;
+        }
+    }
+
     int length = cpt;
     int j = 0;
     int *ind = malloc(sizeof(int) * length);
