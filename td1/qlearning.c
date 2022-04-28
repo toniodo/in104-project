@@ -31,37 +31,6 @@ void q_initialisation()
     qfunction[goal_row * cols + goal_col][3] = 0;
 }
 
-int policy_greedy(int state)
-{
-    return maxlist(qfunction[state], number_actions, true);
-}
-
-int policy_epsgreedy(int state, float epsi)
-{
-    int actio = 0;
-    float alea = ((float)rand()) / RAND_MAX;
-    if (alea < epsi)
-    {
-        actio = env_action_sample();
-    }
-    else
-    {
-        actio = maxlist(qfunction[state], number_actions, true);
-    }
-    return actio;
-}
-
-int state_from_pos(int row, int col)
-{
-    return row * cols + col;
-}
-
-void pos_from_state(int state, int *row, int *col)
-{
-    *row = state / cols;
-    *col = state % cols;
-}
-
 int qlearning()
 {
     envOutput stepOutput;

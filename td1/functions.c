@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "functions.h"
+#include "mazeEnv.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -75,4 +76,15 @@ void show_matrix(double **mat, int n, int m)
         printf("\n");
     }
     printf("\n");
+}
+
+int state_from_pos(int row, int col)
+{
+    return row * cols + col;
+}
+
+void pos_from_state(int state, int *row, int *col)
+{
+    *row = state / cols;
+    *col = state % cols;
 }
