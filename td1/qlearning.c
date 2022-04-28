@@ -55,7 +55,7 @@ int qlearning()
         // save previous state
         prev_state = state_from_pos(state_row, state_col);
         // action according to policy
-        act = policy_greedy(prev_state);
+        act = policy_greedy(prev_state, qfunction[prev_state]);
         // printf("%d\n", act);
         //  response created by the action taken
         stepOutput = maze_step(act);

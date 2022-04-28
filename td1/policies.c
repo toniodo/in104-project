@@ -2,13 +2,14 @@
 #include "qlearning.h"
 #include "functions.h"
 #include "mazeEnv.h"
+#include "policies.h"
 
-int policy_greedy(int state)
+int policy_greedy(int state, double *list)
 {
-    return maxlist(qfunction[state], number_actions, true);
+    return maxlist(list, number_actions, true);
 }
 
-int policy_epsgreedy(int state, float epsi)
+int policy_epsgreedy(int state, float epsi, double *list)
 {
     int actio = 0;
     float alea = ((float)rand()) / RAND_MAX;
@@ -18,7 +19,7 @@ int policy_epsgreedy(int state, float epsi)
     }
     else
     {
-        actio = maxlist(qfunction[state], number_actions, true);
+        actio = maxlist(list, number_actions, true);
     }
     return actio;
 }
