@@ -2,6 +2,7 @@
 #include "qlearning.h"
 #include "functions.h"
 #include "mazeEnv.h"
+
 int policy_greedy(int state)
 {
     return maxlist(qfunction[state], number_actions, true);

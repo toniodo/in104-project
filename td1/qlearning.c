@@ -3,6 +3,7 @@
 #include "functions.h"
 #include <time.h>
 #include <stdbool.h>
+#include "policies.h"
 
 void q_alloc()
 { // Make an array for all possible states
@@ -35,7 +36,7 @@ int qlearning()
 {
     envOutput stepOutput;
     // initialisation of qlearning parameters
-    // double eps = 0.3;
+    // double eps = 0.1;
     double gamma = 2;
     double alpha = 0.8;
     int max_step = 10000;
@@ -55,8 +56,8 @@ int qlearning()
         prev_state = state_from_pos(state_row, state_col);
         // action according to policy
         act = policy_greedy(prev_state);
-        printf("%d\n", act);
-        // response created by the action taken
+        // printf("%d\n", act);
+        //  response created by the action taken
         stepOutput = maze_step(act);
         reward = stepOutput.reward;
         // printf("J'ai gagné une récompense de %.2f\n", reward);

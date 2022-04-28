@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include "functions.h"
-#include "mazeEnv.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include "mazeEnv.h"
+#include "qlearning.h"
 
 int min(int a, int b)
 {

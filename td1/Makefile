@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wfatal-errors -Werror -g
 
 #SRCS = $(wildcard *.c)
-DEPENDENCIES = functions.c mazeEnv.c
+DEPENDENCIES = functions.c mazeEnv.c policies.c
 BINS = solveur dfs
 
 all: $(BINS)
