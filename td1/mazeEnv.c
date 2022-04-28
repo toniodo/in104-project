@@ -140,14 +140,14 @@ envOutput maze_step(action a)
     case goal:
         reward = 1;
         done = 1;
-        state_col = new_cols;
-        state_row = new_rows;
+        state_col = goal_col;
+        state_row = goal_row;
         stepOut.new_col = state_col;
         stepOut.new_row = state_row;
         break;
 
     case wall:
-        reward = -0.5;
+        reward = -0.1;
         stepOut.new_col = state_col;
         stepOut.new_row = state_row;
         break;
@@ -161,7 +161,8 @@ envOutput maze_step(action a)
         break;
 
     default:
-        // reward = 0.01;
+        // act like a discharge, force to explore
+        reward = -0.01;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;
