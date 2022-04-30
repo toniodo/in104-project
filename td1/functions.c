@@ -20,8 +20,8 @@ double maxlist(double *list, int nmax, bool index)
 {
     double max = list[0];
     int indice = 0;
-    bool *listalea = malloc(sizeof(bool) * nmax);
-    int cpt = 0;
+    // bool *listalea = malloc(sizeof(bool) * nmax);
+    // int cpt = 0;
     for (int i = 0; i < nmax; i++)
     {
         if (list[i] > max)
