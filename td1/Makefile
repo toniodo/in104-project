@@ -23,6 +23,9 @@ sarsa: $(DEPENDENCIES:%.c=%.o) sarsa.o
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $^
 
+start: solveur
+	./solveur
+
 clean_objects:
 	@rm -rf *.o
 
