@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "policies.h"
 
-#define VERBOSE (false)
+#define VERBOSE (true)
 
 void q_alloc()
 { // Make an array for all possible states
@@ -23,8 +23,8 @@ void q_initialisation()
     {
         for (int j = 0; j < number_actions; j++)
         {
-            // qfunction[i][j] = ((float)rand()) / RAND_MAX;
-            qfunction[i][j] = 0;
+            qfunction[i][j] = ((float)rand()) / RAND_MAX;
+            // qfunction[i][j] = 0;
         }
     }
     // Set reward of goal
@@ -39,7 +39,7 @@ int qlearning()
     envOutput stepOutput;
     // initialisation of qlearning parameters
     // double eps = 0.1;
-    double gamma = 2;
+    double gamma = 0.8;
     double alpha = 0.8;
     int max_step = 10000;
     // initialisation of a counter
@@ -126,7 +126,7 @@ int main()
 {
     srand(time(0));
     // create maze from file
-    maze_make("testmaze.txt");
+    maze_make("maze.txt");
 
     // initialise qlearning matrix
     q_alloc();
