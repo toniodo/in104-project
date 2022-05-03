@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include "policies.h"
 
+#define VERBOSE (false)
+
 void q_alloc()
 { // Make an array for all possible states
     qfunction = malloc(rows * cols * sizeof(double *));
@@ -71,7 +73,7 @@ int qlearning()
         //  printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], number_actions,false));
         if (stepOutput.done)
         {
-            printf("Je suis arrivé !");
+            printf("Je suis arrivé !\n");
             break;
         }
         //  actualisation of the visited matrix
@@ -88,6 +90,8 @@ int qlearning()
 
 void add_crumbs()
 {
+    if VERBOSE
+        printf("States :");
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -95,7 +99,8 @@ void add_crumbs()
             if (visited[i][j] == crumb)
             {
                 maze[i][j] = '.';
-                printf("%d ", state_from_pos(i, j));
+                if VERBOSE
+                    printf("%d ", state_from_pos(i, j));
             }
         }
     }
@@ -121,13 +126,16 @@ int main()
 {
     srand(time(0));
     // create maze from file
-    maze_make("maze.txt");
+    maze_make("testmaze.txt");
 
     // initialise qlearning matrix
     q_alloc();
     q_initialisation();
-    printf("initial head of qfunction (random) :\n");
-    show_matrix(qfunction, 20, number_actions);
+    if (VERBOSE)
+    {
+        printf("initial head of qfunction (random) :\n");
+        show_matrix(qfunction, 20, number_actions);
+    }
 
     char input = 'y';
     // training loop, continue if y or enter pressed
@@ -145,16 +153,18 @@ int main()
         qlearning(rows, cols);
         // complete maze with crumbs and print it
         add_crumbs();
-        maze_render();
-        // show full qmatrix
-        /*
-        printf("qfunction :\n")
-        show_matrix(qfunction, state_from_pos(rows - 1, cols), number_actions);
-        */
-        // show head of qmatrix
-        printf("head of qfunction :\n");
-        printf("     up    down   left   right\n");
-        show_matrix(qfunction, rows * cols - 1, number_actions);
+        if (VERBOSE)
+        {
+            // show full qmatrix
+            /*
+            printf("qfunction :\n")
+            show_matrix(qfunction, state_from_pos(rows - 1, cols), number_actions);
+            */
+            // show head of qmatrix
+            printf("head of qfunction :\n");
+            printf("     up    down   left   right\n");
+            show_matrix(qfunction, rows * cols - 1, number_actions);
+        }
         maze_render();
         printf("%d %d", rows, cols);
         // waiting for action
