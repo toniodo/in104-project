@@ -1,15 +1,15 @@
 CC = gcc
 CFLAGS = -Wall -Wfatal-errors -Werror -g
 
-DEPENDENCIES = agent.c environment.c render.c
+DEPENDENCIES = $(wildcard src/*.c)
 BINS = main
 
 all: $(BINS)
 
-main: $(DEPENDENCIES:%.c=%.o)
+main: main.o $(DEPENDENCIES:%.c=%.o)
 	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: %.c
+*/%.o: */%.c
 	@$(CC) $(CFLAGS) -c $^
 
 start: main
@@ -17,6 +17,7 @@ start: main
 
 clean_objects:
 	@rm -rf *.o
+	@rm -rf src/*.o
 
 clean: clean_objects
 	@rm -rf $(BINS)
