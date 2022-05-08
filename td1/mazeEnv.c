@@ -153,7 +153,7 @@ envOutput maze_step(action a)
         break;
 
     case crumb:
-        // reward = -0.01;
+        reward = -0.01;
         state_col = new_cols;
         state_row = new_rows;
         stepOut.new_col = state_col;
