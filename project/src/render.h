@@ -5,4 +5,8 @@
 
 void level_render();
 
+void add_crumbs();
+
+void remove_crumbs();
+
 #endif

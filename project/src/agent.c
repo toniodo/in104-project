@@ -1,11 +1,7 @@
 #include "agent.h"
 #include "environment.h"
 #include "utils.h"
-#include <time.h>
-#include <stdbool.h>
 #include "policies.h"
-
-#define VERBOSE (true)
 
 void q_alloc()
 { // Make an array for all possible states (position with presence of ennemy)
@@ -109,38 +105,4 @@ int qlearning()
     }
     printf("Le compteur : %d\n", cpt);
     return 1;
-}
-
-void add_crumbs()
-{
-    if VERBOSE
-        printf("States :");
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        {
-            if (visited[i][j] == crumb)
-            {
-                level[i][j] = '.';
-                if VERBOSE
-                    printf("%d ", pos_from_coord(i, j));
-            }
-        }
-    }
-    level[start_row][start_col] = 's';
-    printf("\n");
-}
-
-void remove_crumbs()
-{
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        {
-            if (level[i][j] == '.')
-            {
-                level[i][j] = ' ';
-            }
-        }
-    }
 }
