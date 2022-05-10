@@ -1,7 +1,13 @@
+# IDE files except debugger file
 **/.vscode/*
 !**/.vscode/launch.json
 *.o
+
+# td binary files
 solveur
 dfs
 solveur2
 sarsa
+
+# project binary files
+main
