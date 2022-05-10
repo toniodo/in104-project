@@ -1,7 +1,4 @@
-#include <stdio.h>
 #include "utils.h"
-#include <stdbool.h>
-#include <stdlib.h>
 #include "environment.h"
 #include "agent.h"
 

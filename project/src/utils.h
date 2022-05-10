@@ -3,6 +3,8 @@
 
 #include <math.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 extern int min(int a, int b);
 extern int max(int a, int b);
