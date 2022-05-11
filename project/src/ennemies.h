@@ -5,6 +5,7 @@ struct ennemy
 {
   int row;
   int col;
+  bool left_move;
 };
 
 typedef struct ennemy ennemy;
