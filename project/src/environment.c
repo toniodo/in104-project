@@ -1,4 +1,5 @@
 #include "environment.h"
+#include "ennemies.h"
 
 void alloc_level()
 {
@@ -81,8 +82,12 @@ void make_level(char *file_name)
   fclose(file);
 }
 
+// TODO : implement gravity
 envOutput make_action(action a)
 {
+  //------------
+  // Player turn
+  //------------
   double reward = 0;
   int done = 0;
   int dead = 0;
@@ -144,6 +149,14 @@ envOutput make_action(action a)
   stepOut.dead = dead;
   stepOut.ennemy = ennemy;
 
+  //------------
+  // Environment turn
+  //------------
+  move_ennemies();
+
+  //------------
+  // END
+  //------------
   return stepOut;
 }
 
@@ -166,18 +179,41 @@ void init_visited()
   {
     for (j = 0; j < cols; ++j)
     {
-      if (level[i][j] == '+')
+      switch (level[i][j])
       {
+      case '+':
         visited[i][j] = wall;
-      }
-      else if (level[i][j] == 'g')
-      {
+        break;
+      case 'g':
         visited[i][j] = goal;
-      }
-      else
-      {
+        break;
+      case 's':
+        visited[i][j] = start;
+        break;
+      case 'e':
+        visited[i][j] = entity;
+        break;
+      case 'd':
+        visited[i][j] = death;
+        break;
+      case '1':
+        visited[i][j] = teleporter1;
+        break;
+      case '2':
+        visited[i][j] = teleporter2;
+        break;
+      default:
         visited[i][j] = unknown;
       }
     }
   }
+}
+
+// need allocations before
+void reset_level()
+{
+  make_level();
+  init_visited();
+  player_row = start_row;
+  player_col = start_col;
 }

@@ -25,9 +25,12 @@ enum terrain
 {
   unknown,
   wall,
-  known,
+  start,
   goal,
-  teleporter,
+  entity,
+  death,
+  teleporter1,
+  teleporter2,
   crumb
 };
 
