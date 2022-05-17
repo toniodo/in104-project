@@ -146,7 +146,9 @@ void reset_level()
   player_col = start_col;
 }
 
-// TODO : implement gravity
+// TODO :
+// implement gravity
+// implement all reactions
 envOutput make_action(action a)
 {
   //------------
@@ -167,18 +169,23 @@ envOutput make_action(action a)
     new_row = max(0, new_row - 1);
     break;
 
-  case right:
-    new_col = min(cols, new_col + 1);
-    break;
-
+  case up_left:
+    // up + falling throught
+    new_row = max(0, new_row - 1);
   case left:
     new_col = max(0, new_col - 1);
     break;
 
-  case up_left:
   case up_right:
+    // up + falling throught
+    new_row = max(0, new_row - 1);
+  case right:
+    new_col = min(cols, new_col + 1);
+    break;
+
   case nbr_actions:
   default:
+    break;
   }
 
   int tile = visited[new_row][new_col];
