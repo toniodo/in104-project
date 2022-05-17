@@ -1,6 +1,7 @@
 #ifndef __ENV_H__
 #define __ENV_H__
 
+#include "agent.h"
 #include <stdlib.h>
 #include <stdio.h>
 

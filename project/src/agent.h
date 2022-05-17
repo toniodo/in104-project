@@ -9,5 +9,6 @@
 double **qfunction;
 
 #define VERBOSE (true);
+#define LEVEL ("test")
 
 #endif

@@ -1,3 +1,4 @@
+#include <string.h>
 #include "environment.h"
 #include "ennemies.h"
 
@@ -8,6 +9,16 @@ void alloc_level()
   for (int i = 0; i < rows; i++)
   {
     level[i] = malloc(cols * sizeof(char *));
+  }
+}
+
+void alloc_visited()
+{
+  visited = malloc(rows * sizeof(int *));
+  int i;
+  for (i = 0; i < rows; ++i)
+  {
+    visited[i] = malloc(cols * sizeof(int *));
   }
 }
 
@@ -80,6 +91,57 @@ void make_level(char *file_name)
   }
 
   fclose(file);
+}
+
+void init_visited()
+{
+  alloc_visited();
+
+  int i, j;
+  for (i = 0; i < rows; ++i)
+  {
+    for (j = 0; j < cols; ++j)
+    {
+      switch (level[i][j])
+      {
+      case '+':
+        visited[i][j] = wall;
+        break;
+      case 'g':
+        visited[i][j] = goal;
+        break;
+      case 's':
+        visited[i][j] = start;
+        break;
+      case 'e':
+        visited[i][j] = entity;
+        break;
+      case 'd':
+        visited[i][j] = death;
+        break;
+      case '1':
+        visited[i][j] = teleporter1;
+        break;
+      case '2':
+        visited[i][j] = teleporter2;
+        break;
+      default:
+        visited[i][j] = unknown;
+      }
+    }
+  }
+}
+
+// need allocations before
+void reset_level()
+{
+  char l[sizeof(char)];
+  strcat(l, "./src/", LEVEL);
+  strcat(l, ".txt");
+  make_level(l);
+  init_visited();
+  player_row = start_row;
+  player_col = start_col;
 }
 
 // TODO : implement gravity
@@ -158,62 +220,4 @@ envOutput make_action(action a)
   // END
   //------------
   return stepOut;
-}
-
-void alloc_visited()
-{
-  visited = malloc(rows * sizeof(int *));
-  int i;
-  for (i = 0; i < rows; ++i)
-  {
-    visited[i] = malloc(cols * sizeof(int *));
-  }
-}
-
-void init_visited()
-{
-  alloc_visited();
-
-  int i, j;
-  for (i = 0; i < rows; ++i)
-  {
-    for (j = 0; j < cols; ++j)
-    {
-      switch (level[i][j])
-      {
-      case '+':
-        visited[i][j] = wall;
-        break;
-      case 'g':
-        visited[i][j] = goal;
-        break;
-      case 's':
-        visited[i][j] = start;
-        break;
-      case 'e':
-        visited[i][j] = entity;
-        break;
-      case 'd':
-        visited[i][j] = death;
-        break;
-      case '1':
-        visited[i][j] = teleporter1;
-        break;
-      case '2':
-        visited[i][j] = teleporter2;
-        break;
-      default:
-        visited[i][j] = unknown;
-      }
-    }
-  }
-}
-
-// need allocations before
-void reset_level()
-{
-  make_level();
-  init_visited();
-  player_row = start_row;
-  player_col = start_col;
 }
