@@ -135,7 +135,8 @@ void init_visited()
 // need allocations before
 void reset_level()
 {
-  char l[sizeof(char)] = "./src/";
+  int length_char = 25; // 10+15 for level size
+  char l[length_char * sizeof(char)] = "./src/";
   strcat(l, LEVEL);
   strcat(l, ".txt");
   make_level(l);
