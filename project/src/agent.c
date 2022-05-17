@@ -53,6 +53,8 @@ int qlearning()
     // initialisation of action
     int act = 0;
     double reward = 0;
+    // set input
+    char input = 'y';
     while (cpt < max_step)
     {
         // save previous state
@@ -76,7 +78,11 @@ int qlearning()
             printf("%d \n", (action)act);
             add_crumbs();
             level_render();
+            scanf("%c", &input);
+            if (input == 'q')
+                break;
         }
+
         reward = stepOutput.reward;
         // printf("J'ai gagné une récompense de %.2f\n", reward);
         new_state = state(ennemies);
