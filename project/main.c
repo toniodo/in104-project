@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "./src/agent.h"
 #include "./src/environment.h"
+#include "./src/render.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,25 +13,25 @@ int main(int argc, char *argv[])
   // allocate
   alloc_level();
   alloc_visited();
-  maze_reset();
-  maze_render();
+  reset_level();
+  level_render();
   char input = 'y';
   // training loop, continue if y or enter pressed
   while (input == 'y' || input == '\n')
   {
     // initialise maze
     init_visited();
-    maze_reset();
+    reset_level();
     remove_crumbs();
     // print maze
     printf("%d, %d \n", rows, cols);
     printf("number of actions : %d \n", nbr_actions);
-    maze_render();
+    level_render();
     // learn
-    qlearning(rows, cols);
+    make_epoch();
     // complete maze with crumbs and print it
     add_crumbs();
-    maze_render();
+    level_render();
     // Waiting for an action
     scanf("%c", &input);
   }

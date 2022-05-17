@@ -7,6 +7,7 @@
 #include <stdbool.h>
 
 double **qfunction;
+int make_epoch();
 
 #define VERBOSE (true);
 #define LEVEL ("test")

@@ -34,7 +34,7 @@ void q_initialisation()
     qfunction[rows * cols + goal_row * cols + goal_col][3] = 0;
 }
 
-int qlearning()
+int make_epoch()
 {
     envOutput stepOutput;
     // initialisation of qlearning parameters

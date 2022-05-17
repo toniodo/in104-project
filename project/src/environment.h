@@ -64,12 +64,12 @@ typedef struct envOutput envOutput;
 
 // allocate level matrix
 void alloc_level();
+void alloc_visited();
 // create level from file
 void make_level(char *);
+void init_visited();
+void reset_level();
 // make action to the environment
 envOutput make_action(action a);
-
-void alloc_visited();
-void init_visited();
 
 #endif

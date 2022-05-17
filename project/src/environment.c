@@ -1,6 +1,7 @@
 #include <string.h>
 #include "environment.h"
 #include "ennemies.h"
+#include "utils.h"
 
 void alloc_level()
 {
@@ -63,7 +64,7 @@ void make_level(char *file_name)
   rows = atoi(rows_s);
   cols = atoi(cols_s);
 
-  alloc_maze();
+  alloc_level();
 
   for (int i = 0; i < rows; i++)
   {
@@ -135,8 +136,8 @@ void init_visited()
 // need allocations before
 void reset_level()
 {
-  int length_char = 25; // 10+15 for level size
-  char l[length_char * sizeof(char)] = "./src/";
+  // 10+15 for level size
+  char l[25 * sizeof(char)] = "./src/";
   strcat(l, LEVEL);
   strcat(l, ".txt");
   make_level(l);
