@@ -90,3 +90,17 @@ void coord_from_state(int state, int *row, int *col)
     *row = (state % (rows * cols)) / cols;
     *col = (state % (rows * cols)) % cols;
 }
+
+int state(bool ennemies)
+{
+    int s;
+    if (ennemies)
+    {
+        s = pos_from_coord(player_row, player_col) + rows * cols;
+    }
+    else
+    {
+        s = pos_from_coord(player_row, player_col);
+    }
+    return s;
+}

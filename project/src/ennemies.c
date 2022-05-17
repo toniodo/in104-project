@@ -7,38 +7,36 @@ void move_ennemy(ennemy *ennemy)
     if (ennemy->last_move == left)
     {
         // if there is a wall and nothing behind the ennemy
-        if ((level[en_row][en_col - 1] == '+') && (level[en_row][en_col + 1] != '+'))
+        if ((visited[en_row][en_col - 1] == wall) && (visited[en_row][en_col + 1] != wall))
         {
             ennemy->col = ennemy->col + 1;
             ennemy->last_move = right;
         }
         // if there is not a wall
-        if
-            else(level[en_row][en_col - 1] != '+')
-            {
-                ennemy->col = ennemy->col - 1;
-            }
+        else if (visited[en_row][en_col - 1] != wall)
+        {
+            ennemy->col = ennemy->col - 1;
+        }
     }
     else if (ennemy->last_move == right)
     {
         // Same as before
-        if ((level[en_row][en_col - 1] != '+') && (level[en_row][en_col + 1] == '+'))
+        if ((visited[en_row][en_col - 1] != wall) && (visited[en_row][en_col + 1] == wall))
         {
             ennemy->col = ennemy->col - 1;
             ennemy->last_move = left;
         }
-        if
-            else(level[en_row][en_col + 1] != '+')
-            {
-                ennemy->col = ennemy->col + 1;
-            }
+        else if (visited[en_row][en_col + 1] != wall)
+        {
+            ennemy->col = ennemy->col + 1;
+        }
     }
     else
     {
-        printf("Not implemented : %d", *ennemy->last_move);
+        printf("Not implemented : %d", ennemy->last_move);
     }
     // Add the gravity effect
-    while (level[en_row + 1][en_col] != '+')
+    while (visited[en_row + 1][en_col] != wall)
     {
         ennemy->row = ennemy->row + 1;
     }

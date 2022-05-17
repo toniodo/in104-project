@@ -68,21 +68,18 @@ int qlearning()
         }
         // action according to policy
         act = policy_greedy(prev_state, qfunction[prev_state]);
-        if VERBOSE
-            printf("%d \n", (action)act);
         // printf("%d\n", act);
         //  response created by the action taken
         stepOutput = make_action(act);
+        if VERBOSE
+        {
+            printf("%d \n", (action)act);
+            add_crumbs();
+            level_render();
+        }
         reward = stepOutput.reward;
         // printf("J'ai gagné une récompense de %.2f\n", reward);
-        if (ennemies)
-        {
-            new_state = pos_from_coord(player_row, player_col) + rows * cols;
-        }
-        else
-        {
-            new_state = pos_from_coord(player_row, player_col);
-        }
+        new_state = state(ennemies);
         // printf("test : %.3f\n", update);
         // printf("%f\n", maxlist(qfunction[new_state], nbr_actions, true));
         // Using Sarsa
