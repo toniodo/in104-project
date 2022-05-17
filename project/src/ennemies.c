@@ -41,3 +41,11 @@ void move_ennemy(ennemy *ennemy)
         ennemy->row = ennemy->row + 1;
     }
 }
+
+void move_ennemies()
+{
+    for (int i = 0; i < nbr_ennemies; i++)
+    {
+        move_ennemy(ennemies + i);
+    }
+}

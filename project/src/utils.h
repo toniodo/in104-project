@@ -15,6 +15,12 @@ void show_matrix(double **mat, int n, int m);
 
 int state_from_pos(int row, int col);
 
+int pos_from_coord(int row, int col);
+
+void coord_from_state(int state, int *row, int *col);
+
 void pos_from_state(int state, int *row, int *col);
+
+int state(bool ennemies);
 
 #endif

@@ -2,6 +2,7 @@
 #include "environment.h"
 #include "utils.h"
 #include "policies.h"
+#include "render.h"
 
 void q_alloc()
 { // Make an array for all possible states (position with presence of ennemy)

@@ -10,7 +10,7 @@ struct ennemy
 };
 
 typedef struct ennemy ennemy;
-
+int nbr_ennemies;
 ennemy *ennemies;
 
 void move_ennemies();

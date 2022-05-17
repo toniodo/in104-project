@@ -22,7 +22,7 @@ void alloc_visited()
     visited[i] = malloc(cols * sizeof(int *));
   }
 }
-
+// TODO: Extend to env
 void make_level(char *file_name)
 {
   char c;
@@ -90,7 +90,7 @@ void make_level(char *file_name)
       level[i][j] = c;
     }
   }
-
+  // nbr_ennemies
   fclose(file);
 }
 

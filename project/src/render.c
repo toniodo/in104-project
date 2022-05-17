@@ -1,6 +1,7 @@
 #include "render.h"
 #include "agent.h"
 #include <stdbool.h>
+#include "utils.h"
 
 void level_render()
 {
