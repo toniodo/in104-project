@@ -1,11 +1,12 @@
 #ifndef __ENNEMIES_H__
 #define __ENNEMIES_H__
 
+#include "environment.h"
 struct ennemy
 {
   int row;
   int col;
-  bool left_move;
+  action last_move;
 };
 
 typedef struct ennemy ennemy;
