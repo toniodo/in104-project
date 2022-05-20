@@ -22,9 +22,6 @@ int goal_col;
 int player_row;
 int player_col;
 
-// Environment variables
-action previous_action;
-
 enum terrain
 {
   unknown,
@@ -53,6 +50,9 @@ enum action
 };
 
 typedef enum action action;
+
+// Environment variables
+action previous_action;
 
 // environment answer
 struct envOutput

@@ -247,6 +247,7 @@ envOutput make_action(action a)
 void gravity(int *new_row, int *new_col)
 {
   int r = min(rows - 1, *new_row + 1);
+  int c;
   switch (previous_action)
   {
   // case free fall
@@ -255,7 +256,7 @@ void gravity(int *new_row, int *new_col)
     *new_row = r;
     break;
   case up_left:
-    int c = max(0, *new_col - 1);
+    c = max(0, *new_col - 1);
     if (visited[r][c] == wall)
     {
       if (visited[*new_row][c] == wall)
@@ -272,7 +273,7 @@ void gravity(int *new_row, int *new_col)
     }
     break;
   case up_right:
-    int c = min(cols - 1, *new_col + 1);
+    c = min(cols - 1, *new_col + 1);
     if (visited[r][c] == wall)
     {
       if (visited[*new_row][c] == wall)
