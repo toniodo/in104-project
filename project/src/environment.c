@@ -137,7 +137,7 @@ void init_visited()
 void reset_level()
 {
   // 10+15 for level size
-  char l[25 * sizeof(char)] = "./src/";
+  char l[25 * sizeof(char)] = "./levels/";
   strcat(l, LEVEL);
   strcat(l, ".txt");
   make_level(l);

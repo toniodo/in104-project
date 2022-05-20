@@ -15,6 +15,8 @@ int main(int argc, char *argv[])
   alloc_visited();
   reset_level();
   level_render();
+  q_alloc();
+  q_initialisation();
   char input = 'y';
   // training loop, continue if y or enter pressed
   while (input == 'y' || input == '\n')
