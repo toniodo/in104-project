@@ -70,27 +70,25 @@ void make_level(char *file_name)
   {
     for (int j = 0; j < cols; j++)
     {
-      c = getc(file);
-
-      if (c == '\n')
+      switch (c = getc(file))
       {
+      case '\n':
         c = getc(file);
-      }
-      else if (c == 's')
-      {
+        break;
+      case 's':
         start_row = i;
         start_col = j;
-      }
-      else if (c == 'g')
-      {
+        break;
+      case 'g':
         goal_row = i;
         goal_col = j;
+        break;
       }
 
       level[i][j] = c;
     }
   }
-  // nbr_ennemies
+  // populate_ennemies()
   fclose(file);
 }
 
@@ -116,6 +114,7 @@ void init_visited()
         break;
       case 'e':
         visited[i][j] = entity;
+        nbr_ennemies++;
         break;
       case 'd':
         visited[i][j] = death;
@@ -163,29 +162,36 @@ envOutput make_action(action a)
   int new_col = player_col;
   int new_row = player_row;
 
-  switch (a)
+  // look downward
+  if (visited[min(rows - 1, new_row + 1)][new_col] != wall)
+    gravity(&new_row, &new_col);
+  else
   {
-  case up:
-    new_row = max(0, new_row - 1);
-    break;
+    // Move
+    switch (a)
+    {
+    case up:
+      new_row = max(0, new_row - 1);
+      break;
 
-  case up_left:
-    // up + falling throught
-    new_row = max(0, new_row - 1);
-  case left:
-    new_col = max(0, new_col - 1);
-    break;
+    case up_left:
+      // up + falling throught
+      new_row = max(0, new_row - 1);
+    case left:
+      new_col = max(0, new_col - 1);
+      break;
 
-  case up_right:
-    // up + falling throught
-    new_row = max(0, new_row - 1);
-  case right:
-    new_col = min(cols, new_col + 1);
-    break;
+    case up_right:
+      // up + falling throught
+      new_row = max(0, new_row - 1);
+    case right:
+      new_col = min(cols - 1, new_col + 1);
+      break;
 
-  case nbr_actions:
-  default:
-    break;
+    default:
+      break;
+    }
+    previous_action = a;
   }
 
   int tile = visited[new_row][new_col];
@@ -208,6 +214,14 @@ envOutput make_action(action a)
     player_row = new_row;
     break;
 
+  case entity:
+    // kill -> break, but death -> fall throught
+  case death:
+    reward = -1;
+    player_col = new_col;
+    player_row = new_row;
+  case teleporter1:
+  case teleporter2:
   default:
     // act like a discharge, force to explore
     reward = -0.01;
@@ -219,7 +233,6 @@ envOutput make_action(action a)
   stepOut.done = done;
   stepOut.dead = dead;
   stepOut.ennemy = ennemy;
-
   //------------
   // Environment turn
   //------------
@@ -229,4 +242,55 @@ envOutput make_action(action a)
   // END
   //------------
   return stepOut;
+}
+
+void gravity(int *new_row, int *new_col)
+{
+  int r = min(rows - 1, *new_row + 1);
+  switch (previous_action)
+  {
+  // case free fall
+  case nbr_actions:
+  case up:
+    *new_row = r;
+    break;
+  case up_left:
+    int c = max(0, *new_col - 1);
+    if (visited[r][c] == wall)
+    {
+      if (visited[*new_row][c] == wall)
+        *new_row = r;
+      else
+        *new_col = c;
+    }
+    // else if (dest == teleporter1)
+    // else if (dest == teleporter2)
+    else
+    {
+      *new_col = c;
+      *new_row = r;
+    }
+    break;
+  case up_right:
+    int c = min(cols - 1, *new_col + 1);
+    if (visited[r][c] == wall)
+    {
+      if (visited[*new_row][c] == wall)
+        *new_row = r;
+      else
+        *new_col = c;
+    }
+    // else if (dest == teleporter1)
+    // else if (dest == teleporter2)
+    else
+    {
+      *new_col = c;
+      *new_row = r;
+    }
+    break;
+  default:
+    break;
+  }
+  // free fall
+  previous_action = nbr_actions;
 }

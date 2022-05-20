@@ -22,6 +22,9 @@ int goal_col;
 int player_row;
 int player_col;
 
+// Environment variables
+action previous_action;
+
 enum terrain
 {
   unknown,
@@ -71,5 +74,6 @@ void init_visited();
 void reset_level();
 // make action to the environment
 envOutput make_action(action a);
+void gravity(int *new_row, int *new_col);
 
 #endif
