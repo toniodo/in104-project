@@ -39,7 +39,7 @@ int make_epoch()
     // double eps = 0.1;
     double gamma = 0.8;
     double alpha = 0.8;
-    int max_step = 1000;
+    int max_step = 200;
     bool ennemies = false;
     // initialisation of a counter
     int cpt = 0;
@@ -97,6 +97,7 @@ int make_epoch()
             visited[player_row][player_col] = crumb;
         }
         cpt++;
+        ennemies = stepOutput.ennemy;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
     printf("Le compteur : %d\n", cpt);
