@@ -88,7 +88,6 @@ void make_level(char *file_name)
       level[i][j] = c;
     }
   }
-  // populate_ennemies()
   fclose(file);
 }
 
@@ -130,6 +129,8 @@ void init_visited()
       }
     }
   }
+
+  populate_ennemies();
 }
 
 // need allocations before

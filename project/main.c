@@ -10,9 +10,6 @@ int main(int argc, char *argv[])
 {
   // initialize time
   srand(time(0));
-  // allocate
-  alloc_level();
-  alloc_visited();
   reset_level();
   level_render();
   q_alloc();

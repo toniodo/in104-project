@@ -6,7 +6,7 @@ BINS = main
 
 all: $(BINS)
 
-main: main.o $(DEPENDENCIES:%.c=%.o)
+main: main.o $(DEPENDENCIES:%.c=%.o) src/agent.h
 	$(CC) $(CFLAGS) -o $@ $^
 
 */%.o: */%.c
