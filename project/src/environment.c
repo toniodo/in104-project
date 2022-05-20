@@ -94,6 +94,7 @@ void make_level(char *file_name)
 void init_visited()
 {
   alloc_visited();
+  nbr_ennemies = 0;
 
   int i, j;
   for (i = 0; i < rows; ++i)

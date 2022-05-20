@@ -10,16 +10,20 @@ void move_ennemy(ennemy *ennemy)
         // if there is a wall and nothing behind the ennemy
         if ((visited[en_row][en_col - 1] == wall) && (visited[en_row][en_col + 1] != wall))
         {
+            level[ennemy->row][ennemy->col] = ' ';
             visited[ennemy->row][ennemy->col] = unknown;
             ennemy->col = ennemy->col + 1;
+            level[ennemy->row][ennemy->col] = 'e';
             visited[ennemy->row][ennemy->col] = entity;
             ennemy->last_move = right;
         }
         // if there is not a wall
         else if (visited[en_row][en_col - 1] != wall)
         {
+            level[ennemy->row][ennemy->col] = ' ';
             visited[ennemy->row][ennemy->col] = unknown;
             ennemy->col = ennemy->col - 1;
+            level[ennemy->row][ennemy->col] = 'e';
             visited[ennemy->row][ennemy->col] = entity;
         }
     }
@@ -28,15 +32,19 @@ void move_ennemy(ennemy *ennemy)
         // Same as before
         if ((visited[en_row][en_col - 1] != wall) && (visited[en_row][en_col + 1] == wall))
         {
+            level[ennemy->row][ennemy->col] = ' ';
             visited[ennemy->row][ennemy->col] = unknown;
             ennemy->col = ennemy->col - 1;
+            level[ennemy->row][ennemy->col] = 'e';
             visited[ennemy->row][ennemy->col] = entity;
             ennemy->last_move = left;
         }
         else if (visited[en_row][en_col + 1] != wall)
         {
+            level[ennemy->row][ennemy->col] = ' ';
             visited[ennemy->row][ennemy->col] = unknown;
             ennemy->col = ennemy->col + 1;
+            level[ennemy->row][ennemy->col] = 'e';
             visited[ennemy->row][ennemy->col] = entity;
         }
     }
@@ -48,8 +56,10 @@ void move_ennemy(ennemy *ennemy)
     while (visited[en_row + 1][en_col] != wall)
     {
         visited[ennemy->row][ennemy->col] = unknown;
+        level[ennemy->row][ennemy->col] = ' ';
         ennemy->row = ennemy->row + 1;
         visited[ennemy->row][ennemy->col] = entity;
+        level[ennemy->row][ennemy->col] = 'e';
     }
 }
 
@@ -97,7 +107,7 @@ void populate_ennemies()
             {
                 (ennemies + cpt - 1)->row = i;
                 (ennemies + cpt - 1)->col = j;
-                (ennemies + cpt - 1)->last_move = true;
+                (ennemies + cpt - 1)->last_move = left;
                 (ennemies + cpt - 1)->index = cpt - 1;
                 cpt--;
             }

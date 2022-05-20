@@ -39,7 +39,7 @@ int make_epoch()
     // double eps = 0.1;
     double gamma = 0.8;
     double alpha = 0.8;
-    int max_step = 100;
+    int max_step = 1000;
     bool ennemies = false;
     // initialisation of a counter
     int cpt = 0;
