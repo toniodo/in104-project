@@ -7,9 +7,14 @@
 #include <stdbool.h>
 
 double **qfunction;
+
 int make_epoch();
 
-#define VERBOSE (true);
+void q_alloc();
+
+void q_initialisation();
+
+#define VERBOSE (false);
 #define LEVEL ("test")
 
 #endif

@@ -25,14 +25,11 @@ void q_initialisation()
         }
     }
     // Set reward of goal
-    qfunction[goal_row * cols + goal_col][0] = 0;
-    qfunction[goal_row * cols + goal_col][1] = 0;
-    qfunction[goal_row * cols + goal_col][2] = 0;
-    qfunction[goal_row * cols + goal_col][3] = 0;
-    qfunction[rows * cols + goal_row * cols + goal_col][0] = 0;
-    qfunction[rows * cols + goal_row * cols + goal_col][1] = 0;
-    qfunction[rows * cols + goal_row * cols + goal_col][2] = 0;
-    qfunction[rows * cols + goal_row * cols + goal_col][3] = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        qfunction[goal_row * cols + goal_col][i] = 0;
+        qfunction[rows * cols + goal_row * cols + goal_col][i] = 0;
+    }
 }
 
 int make_epoch()
@@ -49,7 +46,7 @@ int make_epoch()
     // initialisation index of start position
     player_row = start_row;
     player_col = start_col;
-    int prev_state = pos_from_coord(player_row, player_col);
+    int prev_pos = pos_from_coord(player_row, player_col);
     int new_state;
     // initialisation of action
     int act = 0;
@@ -59,18 +56,13 @@ int make_epoch()
     while (cpt < max_step)
     {
         // save previous state
-        prev_state = pos_from_coord(player_row, player_col);
+        prev_pos = pos_from_coord(player_row, player_col);
         // Consider the presence of an ennemy
         if (ennemies)
-        {
-            prev_state = rows * cols + prev_state;
-        }
-        else
-        {
-            prev_state = prev_state;
-        }
+            prev_pos = rows * cols + prev_pos;
+
         // action according to policy
-        act = policy_greedy(prev_state, qfunction[prev_state]);
+        act = policy_greedy(prev_pos, qfunction[prev_pos]);
         // printf("%d\n", act);
         //  response created by the action taken
         stepOutput = make_action(act);
@@ -90,8 +82,8 @@ int make_epoch()
         // printf("test : %.3f\n", update);
         // printf("%f\n", maxlist(qfunction[new_state], nbr_actions, true));
         // Using Sarsa
-        qfunction[prev_state][act] += alpha * (reward + gamma * qfunction[new_state][act] - qfunction[prev_state][act]);
-        // printf("\nNotre valeur de Q : %.2f", qfunction[prev_state][act]);
+        qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][act] - qfunction[prev_pos][act]);
+        // printf("\nNotre valeur de Q : %.2f", qfunction[prev_pos][act]);
         //  printf("%f\n", qfunction[state][act]);
         //  printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], nbr_actions,false));
         if (stepOutput.done)
