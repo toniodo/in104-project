@@ -76,13 +76,31 @@ void kill_ennemy(ennemy *ennemy)
 
 void kill()
 {
-    int p_row = player_row;
-    int p_col = player_col;
     int ind = 0;
     for (int i = 0; i < nbr_ennemies; i++)
     {
-        if (((ennemies + i)->row == p_row) && ((ennemies + i)->col == p_col))
+        if (((ennemies + i)->row == player_row) && ((ennemies + i)->col == player_col))
             ind = (ennemies + i)->index;
     }
     kill_ennemy(ennemies + ind);
+}
+
+void populate_ennemies()
+{
+    int cpt = nbr_ennemies;
+    ennemies = malloc(sizeof(ennemy) * nbr_ennemies);
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            if (visited[i][j] == entity)
+            {
+                (ennemies + cpt - 1)->row = i;
+                (ennemies + cpt - 1)->col = j;
+                (ennemies + cpt - 1)->last_move = true;
+                (ennemies + cpt - 1)->index = cpt - 1;
+                cpt--;
+            }
+        }
+    }
 }
