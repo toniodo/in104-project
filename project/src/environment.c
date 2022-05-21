@@ -218,7 +218,16 @@ envOutput make_action(action a)
 
   case entity:
     // kill -> break, but death -> fall throught
+    if (previous_action == nbr_actions)
+    {
+      kill();
+      reward = 0.5;
+      player_col = new_col;
+      player_row = new_row;
+      break;
+    }
   case death:
+    dead = 1;
     reward = -1;
     player_col = new_col;
     player_row = new_row;

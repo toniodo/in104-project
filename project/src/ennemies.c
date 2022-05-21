@@ -71,28 +71,22 @@ void move_ennemies()
     }
 }
 
-void kill_ennemy(ennemy *ennemy)
+void kill_ennemy(int i)
 {
-    int ind = ennemy->index;
-    for (int i = ind + 1; i < nbr_ennemies; i++)
-    {
+    level[ennemies[i].row][ennemies[i].col] = ' ';
+    visited[ennemies[i].row][ennemies[i].col] = unknown;
+    for (int j = i + 1; j < nbr_ennemies; j++)
         ennemies[i - 1] = ennemies[i];
-        (ennemies + i - 1)->index = i - 1;
-    }
-    free(ennemy);
-    visited[ennemy->row][ennemy->col] = unknown;
     nbr_ennemies--;
 }
 
 void kill()
 {
-    int ind = 0;
     for (int i = 0; i < nbr_ennemies; i++)
     {
         if (((ennemies + i)->row == player_row) && ((ennemies + i)->col == player_col))
-            ind = (ennemies + i)->index;
+            kill_ennemy(i);
     }
-    kill_ennemy(ennemies + ind);
 }
 
 void populate_ennemies()
@@ -108,7 +102,6 @@ void populate_ennemies()
                 (ennemies + cpt - 1)->row = i;
                 (ennemies + cpt - 1)->col = j;
                 (ennemies + cpt - 1)->last_move = left;
-                (ennemies + cpt - 1)->index = cpt - 1;
                 cpt--;
             }
         }

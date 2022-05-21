@@ -9,7 +9,10 @@ void level_render()
     {
         for (int j = 0; j < cols; j++)
         {
-            printf("%c ", level[i][j]);
+            if (i == player_row && j == player_col)
+                printf("ç ");
+            else
+                printf("%c ", level[i][j]);
         }
         printf("\n");
     }
@@ -18,6 +21,7 @@ void level_render()
 
 void add_crumbs()
 {
+    /*
     if VERBOSE
         printf("States :");
     for (int i = 0; i < rows; i++)
@@ -32,6 +36,13 @@ void add_crumbs()
             }
         }
     }
+    level[start_row][start_col] = 's';
+    printf("\n");
+    */
+    // level[player_row][player_col] = '@';
+    if VERBOSE
+        printf("%d ", pos_from_coord(player_row, player_col));
+
     level[start_row][start_col] = 's';
     printf("\n");
 }
