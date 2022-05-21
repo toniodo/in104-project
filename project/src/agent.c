@@ -51,7 +51,7 @@ int make_epoch()
     // initialisation of action
     int act = policy_greedy(prev_pos, qfunction[prev_pos]);
     int new_act;
-    double reward = 0;
+    double reward;
     // set input
     char input = 'y';
     while (cpt < max_step)
@@ -69,18 +69,11 @@ int make_epoch()
                 break;
         }
         // save new state
-        new_state = pos_from_coord(player_row, player_col);
+        new_state = state(ennemies);
         // Observe reward
         reward = stepOutput.reward;
-        // Consider the presence of an ennemy
-        if (ennemies)
-            new_state = rows * cols + new_state;
         // choose action according to policy
         new_act = policy_greedy(new_state, qfunction[new_state]);
-        reward = stepOutput.reward;
-        new_state = state(ennemies);
-        // printf("test : %.3f\n", update);
-        // printf("%f\n", maxlist(qfunction[new_state], nbr_actions, true));
         // Using Sarsa
         qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_pos][act]);
         // printf("\nNotre valeur de Q : %.2f", qfunction[prev_pos][act]);
