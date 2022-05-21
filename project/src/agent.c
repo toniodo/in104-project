@@ -49,22 +49,15 @@ int make_epoch()
     int prev_pos = pos_from_coord(player_row, player_col);
     int new_state;
     // initialisation of action
-    int act = 0;
-    double reward = 0;
+    int act = policy_greedy(prev_pos, qfunction[prev_pos]);
+    int new_act;
+    double reward;
     // set input
     char input = 'y';
     while (cpt < max_step)
     {
-        // save previous state
-        prev_pos = pos_from_coord(player_row, player_col);
-        // Consider the presence of an ennemy
-        if (ennemies)
-            prev_pos = rows * cols + prev_pos;
-
-        // action according to policy
-        act = policy_greedy(prev_pos, qfunction[prev_pos]);
         // printf("%d\n", act);
-        //  response created by the action taken
+        //  execute the previous action
         stepOutput = make_action(act);
         if VERBOSE
         {
@@ -76,12 +69,14 @@ int make_epoch()
             if (input == 'q')
                 break;
         }
-
-        reward = stepOutput.reward;
-        // printf("J'ai gagné une récompense de %.2f\n", reward);
+        // save new state
         new_state = state(ennemies);
+        // Observe reward
+        reward = stepOutput.reward;
+        // choose action according to policy
+        new_act = policy_greedy(new_state, qfunction[new_state]);
         // Using Sarsa
-        qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][act] - qfunction[prev_pos][act]);
+        qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_pos][act]);
         // printf("\nNotre valeur de Q : %.2f", qfunction[prev_pos][act]);
         //  printf("%f\n", qfunction[state][act]);
         //  printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], nbr_actions,false));
@@ -100,6 +95,8 @@ int make_epoch()
             visited[player_row][player_col] = crumb;
         cpt++;
         ennemies = stepOutput.ennemy;
+        act = new_act;
+        prev_pos = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
     printf("Le compteur : %d\n", cpt);
