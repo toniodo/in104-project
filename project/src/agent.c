@@ -49,8 +49,8 @@ int make_epoch()
     int prev_pos = pos_from_coord(player_row, player_col);
     int new_state;
     // initialisation of action
-    int act = 0;
-    int prev_act = act;
+    int act = policy_greedy(prev_pos, qfunction[prev_pos]);
+    int new_act;
     double reward = 0;
     // set input
     char input = 'y';
@@ -58,7 +58,7 @@ int make_epoch()
     {
         // printf("%d\n", act);
         //  execute the previous action
-        stepOutput = make_action(prev_act);
+        stepOutput = make_action(act);
         if VERBOSE
         {
             printf("%d \n", (action)act);
@@ -68,20 +68,21 @@ int make_epoch()
             if (input == 'q')
                 break;
         }
-        // save previous state
+        // save new state
         new_state = pos_from_coord(player_row, player_col);
+        // Observe reward
+        reward = stepOutput.reward;
         // Consider the presence of an ennemy
         if (ennemies)
             new_state = rows * cols + new_state;
         // choose action according to policy
-        act = policy_greedy(new_state, qfunction[new_state]);
+        new_act = policy_greedy(new_state, qfunction[new_state]);
         reward = stepOutput.reward;
-        // printf("J'ai gagné une récompense de %.2f\n", reward);
         new_state = state(ennemies);
         // printf("test : %.3f\n", update);
         // printf("%f\n", maxlist(qfunction[new_state], nbr_actions, true));
         // Using Sarsa
-        qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][new_state] - qfunction[prev_pos][act]);
+        qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_pos][act]);
         // printf("\nNotre valeur de Q : %.2f", qfunction[prev_pos][act]);
         //  printf("%f\n", qfunction[state][act]);
         //  printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], nbr_actions,false));
@@ -102,7 +103,7 @@ int make_epoch()
         }
         cpt++;
         ennemies = stepOutput.ennemy;
-        prev_act = act;
+        act = new_act;
         prev_pos = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
