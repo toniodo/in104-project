@@ -197,6 +197,8 @@ envOutput make_action(action a)
   }
 
   int tile = visited[new_row][new_col];
+  if VERBOSE
+    printf("tile : %d\n", tile);
   switch (tile)
   {
   case goal:
@@ -210,17 +212,13 @@ envOutput make_action(action a)
     reward = -0.1;
     break;
 
-  case crumb:
-    reward = -0.01;
-    player_col = new_col;
-    player_row = new_row;
-    break;
-
   case entity:
+    printf("Encounter entity\n");
     // kill -> break, but death -> fall throught
     if (previous_action == nbr_actions)
     {
-      kill();
+      printf("Goomba killed !\n");
+      kill(new_row, new_col);
       reward = 0.5;
       player_col = new_col;
       player_row = new_row;
@@ -233,6 +231,7 @@ envOutput make_action(action a)
     player_row = new_row;
   case teleporter1:
   case teleporter2:
+  case crumb:
   default:
     // act like a discharge, force to explore
     reward = -0.01;
@@ -240,18 +239,26 @@ envOutput make_action(action a)
     player_row = new_row;
   }
 
-  stepOut.reward = reward;
-  stepOut.done = done;
-  stepOut.dead = dead;
-  stepOut.ennemy = ennemy;
+  int is_player_dead = 0;
   //------------
   // Environment turn
   //------------
-  move_ennemies();
+  move_ennemies(&is_player_dead);
+  if (is_player_dead)
+  {
+    reward -= 1;
+    dead = 1;
+  }
 
   //------------
   // END
   //------------
+
+  stepOut.reward = reward;
+  stepOut.done = done;
+  stepOut.dead = dead;
+  stepOut.ennemy = ennemy;
+
   return stepOut;
 }
 
@@ -304,5 +311,7 @@ void gravity(int *new_row, int *new_col)
     break;
   }
   // free fall
+  if VERBOSE
+    printf("falling\n");
   previous_action = nbr_actions;
 }

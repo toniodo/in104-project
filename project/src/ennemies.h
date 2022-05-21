@@ -13,10 +13,10 @@ typedef struct ennemy ennemy;
 int nbr_ennemies;
 ennemy *ennemies;
 
-void move_ennemies();
-void move_ennemy(ennemy *ennemy);
+void move_ennemies(int *is_player_dead);
+void move_ennemy(ennemy *ennemy, int *is_player_dead);
 void kill_ennemy(int i);
-void kill();
+void kill(int p_row, int p_col);
 void populate_ennemies();
 
 #endif

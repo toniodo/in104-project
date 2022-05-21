@@ -5,6 +5,24 @@
 
 void level_render()
 {
+    if (!VERBOSE)
+        for (int i = 0; i < 17; i++)
+            printf("\n");
+
+    if VERBOSE
+    {
+        printf("\n");
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                printf("%d ", visited[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n\n\n");
+    }
+
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -59,4 +77,14 @@ void remove_crumbs()
             }
         }
     }
+}
+
+void print_action(action act)
+{
+    printf("%s\n", act == 0   ? "left"
+                   : act == 1 ? "right"
+                   : act == 2 ? "up"
+                   : act == 3 ? "up_left"
+                   : act == 4 ? "up_right"
+                              : "falling");
 }

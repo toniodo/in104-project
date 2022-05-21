@@ -68,7 +68,8 @@ int make_epoch()
         stepOutput = make_action(act);
         if VERBOSE
         {
-            printf("%d \n", (action)act);
+            printf("action taken : %d -> ", (action)act);
+            print_action(act);
             add_crumbs();
             level_render();
             scanf("%c", &input);
@@ -79,8 +80,6 @@ int make_epoch()
         reward = stepOutput.reward;
         // printf("J'ai gagné une récompense de %.2f\n", reward);
         new_state = state(ennemies);
-        // printf("test : %.3f\n", update);
-        // printf("%f\n", maxlist(qfunction[new_state], nbr_actions, true));
         // Using Sarsa
         qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][act] - qfunction[prev_pos][act]);
         // printf("\nNotre valeur de Q : %.2f", qfunction[prev_pos][act]);
@@ -98,9 +97,7 @@ int make_epoch()
         }
         //  actualisation of the visited matrix
         else
-        {
             visited[player_row][player_col] = crumb;
-        }
         cpt++;
         ennemies = stepOutput.ennemy;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);

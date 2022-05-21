@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     reset_level();
     remove_crumbs();
     // print maze
-    printf("%d, %d \n", rows, cols);
+    printf("rows %d | cols %d \n", rows, cols);
     printf("number of actions : %d \n", nbr_actions);
     level_render();
     // learn
