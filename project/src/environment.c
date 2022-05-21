@@ -2,6 +2,7 @@
 #include "environment.h"
 #include "ennemies.h"
 #include "utils.h"
+#include "render.h"
 
 void alloc_level()
 {
@@ -239,17 +240,26 @@ envOutput make_action(action a)
     player_row = new_row;
   }
 
-  int is_player_dead = 0;
-  //------------
-  // Environment turn
-  //------------
-  move_ennemies(&is_player_dead);
-  if (is_player_dead)
+  if (!dead)
   {
-    reward -= 1;
-    dead = 1;
-  }
 
+    printf("\n");
+    level_render();
+    char input;
+    scanf("%c", &input);
+
+    //------------
+    // Environment turn
+    //------------
+
+    int is_player_dead = 0;
+    move_ennemies(&is_player_dead);
+    if (is_player_dead)
+    {
+      reward -= 1;
+      dead = 1;
+    }
+  }
   //------------
   // END
   //------------

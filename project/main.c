@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
     // learn
     make_epoch();
     // complete maze with crumbs and print it
-    add_crumbs();
-    level_render();
+    // add_crumbs();
+    // level_render();
     // Waiting for an action
     scanf("%c", &input);
   }
