@@ -240,7 +240,7 @@ envOutput make_action(action a)
     player_row = new_row;
   }
 
-  if (!dead)
+  if (!dead && nbr_ennemies)
   {
 
     printf("\n");

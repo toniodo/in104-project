@@ -7,6 +7,7 @@ struct ennemy
   int row;
   int col;
   action last_move;
+  int dead;
 };
 
 typedef struct ennemy ennemy;

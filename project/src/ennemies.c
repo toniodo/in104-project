@@ -74,18 +74,20 @@ void move_ennemies(int *is_player_dead)
 {
     for (int i = 0; i < nbr_ennemies; i++)
     {
-        move_ennemy(ennemies + i, is_player_dead);
+        if (!ennemies[i].dead)
+            move_ennemy(ennemies + i, is_player_dead);
     }
 }
 
 void kill_ennemy(int i)
 {
     ennemy *e = ennemies + i;
+    if VERBOSE
+        printf("Remove ennemy %d", i);
     level[e->row][e->col] = ' ';
     visited[e->row][e->col] = unknown;
-    for (int j = i + 1; j < nbr_ennemies; j++)
-        ennemies[i - 1] = ennemies[i];
-    nbr_ennemies--;
+    e->dead = 1;
+    // nbr_ennemies--;
 }
 
 void kill(int p_row, int p_col)
@@ -115,6 +117,7 @@ void populate_ennemies()
                 e->row = i;
                 e->col = j;
                 e->last_move = left;
+                e->dead = 0;
                 cpt++;
             }
         }
