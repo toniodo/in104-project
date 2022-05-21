@@ -90,6 +90,11 @@ int make_epoch()
             printf("Je suis arrivé !\n");
             break;
         }
+        else if (stepOutput.dead)
+        {
+            printf("Game Over !\n");
+            break;
+        }
         //  actualisation of the visited matrix
         else
         {
