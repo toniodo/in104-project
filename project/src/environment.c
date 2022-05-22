@@ -159,7 +159,7 @@ envOutput make_action(action a)
   double reward = 0;
   int done = 0;
   int dead = 0;
-  int ennemy = 0;
+  int enemy = 0;
   envOutput stepOut;
 
   int new_col = player_col;
@@ -178,14 +178,14 @@ envOutput make_action(action a)
       break;
 
     case up_left:
-      // up + falling throught
+      // up + falling through
       new_row = max(0, new_row - 1);
     case left:
       new_col = max(0, new_col - 1);
       break;
 
     case up_right:
-      // up + falling throught
+      // up + falling through
       new_row = max(0, new_row - 1);
     case right:
       new_col = min(cols - 1, new_col + 1);
@@ -216,7 +216,7 @@ envOutput make_action(action a)
   case entity:
     if VERBOSE
       printf("Encounter entity\n");
-    // kill -> break, but death -> fall throught
+    // kill -> break, but death -> fall through
     if (previous_action == nbr_actions)
     {
       printf("Goomba killed !\n");
@@ -243,7 +243,7 @@ envOutput make_action(action a)
 
   if (!dead && nbr_ennemies)
   {
-    if (render_type == RenderPlayerEnnemy)
+    if (render_type == RenderPlayerEnemy)
     {
       printf("\n");
       level_render(1);
@@ -270,7 +270,7 @@ envOutput make_action(action a)
   stepOut.reward = reward;
   stepOut.done = done;
   stepOut.dead = dead;
-  stepOut.ennemy = ennemy;
+  stepOut.enemy = enemy;
 
   return stepOut;
 }

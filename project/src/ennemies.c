@@ -3,71 +3,71 @@
 #include "render.h"
 #include "utils.h"
 
-void move_ennemy(ennemy *ennemy, int *is_player_dead)
+void move_enemy(enemy *enemy, int *is_player_dead)
 {
-    int r = ennemy->row;
-    int c = ennemy->col;
+    int r = enemy->row;
+    int c = enemy->col;
     // gravity
     if (visited[min(r + 1, rows - 1)][c] != wall)
-        ennemy->row = min(r + 1, rows - 1);
+        enemy->row = min(r + 1, rows - 1);
     else
     {
         // move
-        if (ennemy->last_move == left)
+        if (enemy->last_move == left)
         {
-            // if there is a wall and nothing behind the ennemy
+            // if there is a wall and nothing behind the enemy
             if ((visited[r][c - 1] == wall) && (visited[r][c + 1] != wall))
             {
-                level[ennemy->row][ennemy->col] = ' ';
-                visited[ennemy->row][ennemy->col] = unknown;
-                ennemy->col = ennemy->col + 1;
-                level[ennemy->row][ennemy->col] = 'e';
-                visited[ennemy->row][ennemy->col] = entity;
-                ennemy->last_move = right;
+                level[enemy->row][enemy->col] = ' ';
+                visited[enemy->row][enemy->col] = unknown;
+                enemy->col = enemy->col + 1;
+                level[enemy->row][enemy->col] = 'e';
+                visited[enemy->row][enemy->col] = entity;
+                enemy->last_move = right;
             }
             // if there is not a wall
             else if (visited[r][c - 1] != wall)
             {
-                level[ennemy->row][ennemy->col] = ' ';
-                visited[ennemy->row][ennemy->col] = unknown;
-                ennemy->col = ennemy->col - 1;
-                level[ennemy->row][ennemy->col] = 'e';
-                visited[ennemy->row][ennemy->col] = entity;
+                level[enemy->row][enemy->col] = ' ';
+                visited[enemy->row][enemy->col] = unknown;
+                enemy->col = enemy->col - 1;
+                level[enemy->row][enemy->col] = 'e';
+                visited[enemy->row][enemy->col] = entity;
             }
         }
-        else if (ennemy->last_move == right)
+        else if (enemy->last_move == right)
         {
             // Same as before
             if ((visited[r][c - 1] != wall) && (visited[r][c + 1] == wall))
             {
-                level[ennemy->row][ennemy->col] = ' ';
-                visited[ennemy->row][ennemy->col] = unknown;
-                ennemy->col = ennemy->col - 1;
-                level[ennemy->row][ennemy->col] = 'e';
-                visited[ennemy->row][ennemy->col] = entity;
-                ennemy->last_move = left;
+                level[enemy->row][enemy->col] = ' ';
+                visited[enemy->row][enemy->col] = unknown;
+                enemy->col = enemy->col - 1;
+                level[enemy->row][enemy->col] = 'e';
+                visited[enemy->row][enemy->col] = entity;
+                enemy->last_move = left;
             }
             else if (visited[r][c + 1] != wall)
             {
-                level[ennemy->row][ennemy->col] = ' ';
-                visited[ennemy->row][ennemy->col] = unknown;
-                ennemy->col = ennemy->col + 1;
-                level[ennemy->row][ennemy->col] = 'e';
-                visited[ennemy->row][ennemy->col] = entity;
+                level[enemy->row][enemy->col] = ' ';
+                visited[enemy->row][enemy->col] = unknown;
+                enemy->col = enemy->col + 1;
+                level[enemy->row][enemy->col] = 'e';
+                visited[enemy->row][enemy->col] = entity;
             }
         }
         else
         {
             if VERBOSE
             {
-                printf("Not implemented : %d -> ", ennemy->last_move);
-                print_action(ennemy->last_move);
+                printf("Not implemented : %d -> ", enemy->last_move);
+                print_action(enemy->last_move);
             }
         }
     }
 
     // check if there is the player
-    if (player_row == ennemy->row && player_col == ennemy->col)
+    if (player_row == enemy->row && player_col == enemy->col)
     {
         *is_player_dead = 1;
     }
@@ -78,15 +78,15 @@ void move_ennemies(int *is_player_dead)
     for (int i = 0; i < nbr_ennemies; i++)
     {
         if (!ennemies[i].dead)
-            move_ennemy(ennemies + i, is_player_dead);
+            move_enemy(ennemies + i, is_player_dead);
     }
 }
 
-void kill_ennemy(int i)
+void kill_enemy(int i)
 {
-    ennemy *e = ennemies + i;
+    enemy *e = ennemies + i;
     if VERBOSE
-        printf("Remove ennemy %d", i);
+        printf("Remove enemy %d", i);
     level[e->row][e->col] = ' ';
     visited[e->row][e->col] = unknown;
     e->dead = 1;
@@ -97,12 +97,12 @@ void kill(int p_row, int p_col)
 {
     for (int i = 0; i < nbr_ennemies; i++)
     {
-        ennemy *e = ennemies + i;
+        enemy *e = ennemies + i;
         if (e->row == p_row && e->col == p_col)
         {
             if VERBOSE
-                printf("ennemy found");
-            kill_ennemy(i);
+                printf("enemy found");
+            kill_enemy(i);
         }
     }
 }
@@ -110,14 +110,14 @@ void kill(int p_row, int p_col)
 void populate_ennemies()
 {
     int cpt = 0;
-    ennemies = malloc(sizeof(ennemy) * nbr_ennemies);
+    ennemies = malloc(sizeof(enemy) * nbr_ennemies);
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
         {
             if (visited[i][j] == entity)
             {
-                ennemy *e = ennemies + cpt;
+                enemy *e = ennemies + cpt;
                 e->row = i;
                 e->col = j;
                 e->last_move = left;

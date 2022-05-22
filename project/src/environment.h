@@ -60,7 +60,7 @@ struct envOutput
   double reward;
   int done;
   int dead;
-  int ennemy;
+  int enemy;
 };
 
 typedef struct envOutput envOutput;

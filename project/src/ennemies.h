@@ -2,7 +2,7 @@
 #define __ENNEMIES_H__
 
 #include "environment.h"
-struct ennemy
+struct enemy
 {
   int row;
   int col;
@@ -10,13 +10,13 @@ struct ennemy
   int dead;
 };
 
-typedef struct ennemy ennemy;
+typedef struct enemy enemy;
 int nbr_ennemies;
-ennemy *ennemies;
+enemy *ennemies;
 
 void move_ennemies(int *is_player_dead);
-void move_ennemy(ennemy *ennemy, int *is_player_dead);
-void kill_ennemy(int i);
+void move_enemy(enemy *enemy, int *is_player_dead);
+void kill_enemy(int i);
 void kill(int p_row, int p_col);
 void populate_ennemies();
 

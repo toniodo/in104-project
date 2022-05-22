@@ -5,7 +5,7 @@
 #include "render.h"
 
 void q_alloc()
-{ // Make an array for all possible states (position with presence of ennemy)
+{ // Make an array for all possible states (position with presence of enemy)
     qfunction = malloc(rows * cols * 2 * sizeof(double *));
     for (int i = 0; i < rows * cols * 2; i++)
     {
@@ -97,7 +97,7 @@ int make_epoch()
         else
             visited[player_row][player_col] = crumb;
         cpt++;
-        ennemies = stepOutput.ennemy;
+        ennemies = stepOutput.enemy;
         act = new_act;
         prev_pos = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
