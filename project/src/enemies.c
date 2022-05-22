@@ -131,20 +131,30 @@ void kill()
 // return boolean
 int is_enemy_near_player(int dist)
 {
-    // Look for a window around the player
-    for (int i = -dist; i <= dist; i++)
+    int window = 0;
+    // don't do that
+    if (window)
     {
-        for (int j = -dist; j <= dist; j++)
+        // Look for a window around the player
+        for (int i = -dist; i <= dist; i++)
         {
-            int r = player_row + i;
-            r = r < 0 ? 0 : r >= rows ? rows - 1
-                                      : r;
-            int c = player_col + j;
-            c = c < 0 ? 0 : c >= cols ? cols - 1
-                                      : c;
-            if (visited[r][c] == entity)
-                return 1;
+            for (int j = -dist; j <= dist; j++)
+            {
+                int r = player_row + i;
+                int c = player_col + j;
+                if (r < 0 || r >= rows || c < 0 || c >= cols)
+                    break;
+                if (visited[r][c] == entity)
+                    return 1;
+            }
         }
     }
+    // better that for the moment
+    else
+    {
+        if (visited[player_row][player_col - 1] == entity || visited[player_row][player_col + 1] == entity)
+            return 1;
+    }
+
     return 0;
 }
