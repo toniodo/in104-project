@@ -40,22 +40,21 @@ int make_epoch()
     double gamma = 0.8;
     double alpha = 0.8;
     int max_step = 200;
-    bool enemies = false;
     // initialisation of a counter
     int cpt = 0;
     // initialisation index of start position
     player_row = start_row;
     player_col = start_col;
-    int prev_state = state(player_row, player_col, enemies);
+    int prev_state = state(player_row, player_col, 0);
     int new_state;
     // initialisation of action
     int act = policy_greedy(prev_state, qfunction[prev_state]);
-    int new_act;
     double reward;
     // set input
     char input = 'y';
     while (cpt < max_step)
     {
+        act = policy_greedy(prev_state, qfunction[prev_state]);
         // printf("%d\n", act);
         //  execute the previous action
         stepOutput = make_action(act);
@@ -74,15 +73,12 @@ int make_epoch()
             if (input == 'q')
                 break;
         }
-        // save new state
-        enemies = stepOutput.enemy;
-        new_state = state(player_row, player_col, enemies);
-        // Observe reward
         reward = stepOutput.reward;
-        // choose action according to policy
-        new_act = policy_greedy(new_state, qfunction[new_state]);
+        // save new state
+        new_state = state(player_row, player_col, stepOutput.enemy);
+        // Observe reward
         // Using Sarsa
-        qfunction[prev_state][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_state][act]);
+        qfunction[prev_state][act] += alpha * (reward + gamma * maxlist(qfunction[new_state], nbr_actions, false) - qfunction[prev_state][act]);
 
         if (stepOutput.done)
         {
@@ -98,9 +94,7 @@ int make_epoch()
         else
             visited[player_row][player_col] = crumb;
         cpt++;
-        act = new_act;
         prev_state = new_state;
-        // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
     printf("Nombre total d'itérations : %d\n", cpt);
     return 1;
