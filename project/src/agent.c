@@ -6,7 +6,6 @@
 
 void q_alloc()
 { // Make an array for all possible states (position with presence of enemy)
-    printf("nbr states : %d\n", rows * cols * 2);
     qfunction = malloc(rows * cols * 2 * sizeof(double *));
     for (int i = 0; i < rows * cols * 2; i++)
     {
