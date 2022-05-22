@@ -19,5 +19,6 @@ void add_crumbs();
 void remove_crumbs();
 
 void print_action(action act);
+void print_q_matrix();
 
 #endif

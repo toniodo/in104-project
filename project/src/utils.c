@@ -91,16 +91,10 @@ void coord_from_state(int state, int *row, int *col)
     *col = (state % (rows * cols)) % cols;
 }
 
-int state(bool enemies)
+int state(int row, int col, bool enemies)
 {
-    int s;
     if (enemies)
-    {
-        s = pos_from_coord(player_row, player_col) + rows * cols;
-    }
+        return pos_from_coord(row, col) + rows * cols;
     else
-    {
-        s = pos_from_coord(player_row, player_col);
-    }
-    return s;
+        return pos_from_coord(row, col);
 }

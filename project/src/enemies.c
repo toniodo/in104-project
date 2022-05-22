@@ -83,6 +83,7 @@ void move_enemy(enemy *enemy, int *is_player_dead)
             {
                 printf("Not implemented : %d -> ", enemy->last_move);
                 print_action(enemy->last_move);
+                printf("\n");
             }
         }
     }

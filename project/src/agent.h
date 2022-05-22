@@ -14,7 +14,7 @@ void q_alloc();
 
 void q_initialisation();
 
-#define VERBOSE (false)
+#define VERBOSE (true)
 #define LEVEL ("base")
 
 #endif

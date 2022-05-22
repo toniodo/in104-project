@@ -127,10 +127,39 @@ void remove_crumbs()
 
 void print_action(action act)
 {
-    printf("%s\n", act == 0   ? "left"
-                   : act == 1 ? "right"
-                   : act == 2 ? "up"
-                   : act == 3 ? "up_left"
-                   : act == 4 ? "up_right"
-                              : "falling");
+    printf("%s", act == 0   ? "left    "
+                 : act == 1 ? "right   "
+                 : act == 2 ? "up      "
+                 : act == 3 ? "up_left "
+                 : act == 4 ? "up_right"
+                            : "falling ");
+}
+
+void print_q_matrix()
+{
+    for (int i = 0; i < 2 * rows; i++)
+    {
+        if (i == rows)
+            printf("____________________________\n");
+        printf("%d\n", i % rows);
+        for (int k = 0; k < nbr_actions; k++)
+        {
+            print_action(k);
+            printf("  ");
+            for (int j = 0; j < 2 * cols; j++)
+            {
+
+                int a = 10 * qfunction[state(i % rows, j % cols, (int)i / rows)][k];
+                if (a >= 0 && a < 10)
+                    printf("%d", a);
+                else if (a < 10)
+                    printf("-");
+                else
+                    printf("x");
+            }
+            printf("\n");
+        }
+        // printf("\n");
+    }
+    printf("\n\n");
 }

@@ -197,7 +197,7 @@ envOutput make_action(action a)
   }
 
   int tile = visited[new_row][new_col];
-  if VERBOSE
+  if (VERBOSE && render_type <= RenderPlayerPlayer)
     printf("tile : %d\n", tile);
   switch (tile)
   {
@@ -323,7 +323,7 @@ void gravity(int *new_row, int *new_col)
     break;
   }
   // free fall
-  if VERBOSE
+  if (VERBOSE && render_type <= RenderPlayerPlayer)
     printf("falling\n");
   previous_action = nbr_actions;
 }

@@ -6,6 +6,7 @@
 
 void q_alloc()
 { // Make an array for all possible states (position with presence of enemy)
+    printf("nbr states : %d\n", rows * cols * 2);
     qfunction = malloc(rows * cols * 2 * sizeof(double *));
     for (int i = 0; i < rows * cols * 2; i++)
     {
@@ -46,7 +47,7 @@ int make_epoch()
     // initialisation index of start position
     player_row = start_row;
     player_col = start_col;
-    int prev_state = state(enemies);
+    int prev_state = state(player_row, player_col, enemies);
     int new_state;
     // initialisation of action
     int act = policy_greedy(prev_state, qfunction[prev_state]);
@@ -59,14 +60,16 @@ int make_epoch()
         // printf("%d\n", act);
         //  execute the previous action
         stepOutput = make_action(act);
-        if VERBOSE
+        if (VERBOSE && render_type <= RenderPlayerPlayer)
         {
             printf("action taken : %d -> ", (action)act);
             print_action(act);
+            printf("\n");
         }
         if (render_type <= RenderPlayerPlayer)
         {
             // add_crumbs();
+            print_q_matrix();
             level_render(1);
             scanf("%c", &input);
             if (input == 'q')
@@ -74,7 +77,7 @@ int make_epoch()
         }
         // save new state
         enemies = stepOutput.enemy;
-        new_state = state(enemies);
+        new_state = state(player_row, player_col, enemies);
         // Observe reward
         reward = stepOutput.reward;
         // choose action according to policy
