@@ -46,7 +46,7 @@ int make_epoch()
     // initialisation index of start position
     player_row = start_row;
     player_col = start_col;
-    int prev_state = state(ennemies);
+    int prev_state = state(enemies);
     int new_state;
     // initialisation of action
     int act = policy_greedy(prev_state, qfunction[prev_state]);
