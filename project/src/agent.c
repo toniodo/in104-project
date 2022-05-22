@@ -73,6 +73,7 @@ int make_epoch()
                 break;
         }
         // save new state
+        enemies = stepOutput.enemy;
         new_state = state(enemies);
         // Observe reward
         reward = stepOutput.reward;
@@ -95,7 +96,6 @@ int make_epoch()
         else
             visited[player_row][player_col] = crumb;
         cpt++;
-        enemies = stepOutput.enemy;
         act = new_act;
         prev_state = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
