@@ -1,7 +1,28 @@
-#include "ennemies.h"
+#include "enemies.h"
 #include "environment.h"
 #include "render.h"
 #include "utils.h"
+
+void populate_enemies()
+{
+    int cpt = 0;
+    enemies = malloc(sizeof(enemy) * nbr_enemies);
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            if (visited[i][j] == entity)
+            {
+                enemy *e = enemies + cpt;
+                e->row = i;
+                e->col = j;
+                e->last_move = left;
+                e->dead = 0;
+                cpt++;
+            }
+        }
+    }
+}
 
 void move_enemy(enemy *enemy, int *is_player_dead)
 {
@@ -73,32 +94,32 @@ void move_enemy(enemy *enemy, int *is_player_dead)
     }
 }
 
-void move_ennemies(int *is_player_dead)
+void move_enemies(int *is_player_dead)
 {
-    for (int i = 0; i < nbr_ennemies; i++)
+    for (int i = 0; i < nbr_enemies; i++)
     {
-        if (!ennemies[i].dead)
-            move_enemy(ennemies + i, is_player_dead);
+        if (!enemies[i].dead)
+            move_enemy(enemies + i, is_player_dead);
     }
 }
 
 void kill_enemy(int i)
 {
-    enemy *e = ennemies + i;
+    enemy *e = enemies + i;
     if VERBOSE
         printf("Remove enemy %d", i);
     level[e->row][e->col] = ' ';
     visited[e->row][e->col] = unknown;
     e->dead = 1;
-    // nbr_ennemies--;
+    // nbr_enemies--;
 }
 
-void kill(int p_row, int p_col)
+void kill()
 {
-    for (int i = 0; i < nbr_ennemies; i++)
+    for (int i = 0; i < nbr_enemies; i++)
     {
-        enemy *e = ennemies + i;
-        if (e->row == p_row && e->col == p_col)
+        enemy *e = enemies + i;
+        if (e->row == player_row && e->col == player_col)
         {
             if VERBOSE
                 printf("enemy found");
@@ -107,23 +128,23 @@ void kill(int p_row, int p_col)
     }
 }
 
-void populate_ennemies()
+// return boolean
+int is_enemy_near_player(int dist)
 {
-    int cpt = 0;
-    ennemies = malloc(sizeof(enemy) * nbr_ennemies);
-    for (int i = 0; i < rows; i++)
+    // Look for a window around the player
+    for (int i = -dist; i <= dist; i++)
     {
-        for (int j = 0; j < cols; j++)
+        for (int j = -dist; j <= dist; j++)
         {
-            if (visited[i][j] == entity)
-            {
-                enemy *e = ennemies + cpt;
-                e->row = i;
-                e->col = j;
-                e->last_move = left;
-                e->dead = 0;
-                cpt++;
-            }
+            int r = player_row + i;
+            r = r < 0 ? 0 : r >= rows ? rows - 1
+                                      : r;
+            int c = player_col + j;
+            c = c < 0 ? 0 : c >= cols ? cols - 1
+                                      : c;
+            if (visited[r][c] == entity)
+                return 1;
         }
     }
+    return 0;
 }

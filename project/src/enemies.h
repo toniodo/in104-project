@@ -1,5 +1,5 @@
-#ifndef __ENNEMIES_H__
-#define __ENNEMIES_H__
+#ifndef __enemies_H__
+#define __enemies_H__
 
 #include "environment.h"
 struct enemy
@@ -11,13 +11,14 @@ struct enemy
 };
 
 typedef struct enemy enemy;
-int nbr_ennemies;
-enemy *ennemies;
+int nbr_enemies;
+enemy *enemies;
 
-void move_ennemies(int *is_player_dead);
+void populate_enemies();
+void move_enemies(int *is_player_dead);
 void move_enemy(enemy *enemy, int *is_player_dead);
 void kill_enemy(int i);
-void kill(int p_row, int p_col);
-void populate_ennemies();
+void kill();
+int is_enemy_near_player(int dist);
 
 #endif

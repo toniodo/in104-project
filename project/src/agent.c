@@ -40,7 +40,7 @@ int make_epoch()
     double gamma = 0.8;
     double alpha = 0.8;
     int max_step = 200;
-    bool ennemies = false;
+    bool enemies = false;
     // initialisation of a counter
     int cpt = 0;
     // initialisation index of start position
@@ -73,7 +73,7 @@ int make_epoch()
                 break;
         }
         // save new state
-        new_state = state(ennemies);
+        new_state = state(enemies);
         // Observe reward
         reward = stepOutput.reward;
         // choose action according to policy
@@ -97,7 +97,7 @@ int make_epoch()
         else
             visited[player_row][player_col] = crumb;
         cpt++;
-        ennemies = stepOutput.enemy;
+        enemies = stepOutput.enemy;
         act = new_act;
         prev_pos = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
