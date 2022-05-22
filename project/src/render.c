@@ -42,16 +42,16 @@ void start_render()
     } while (render_type > 3 && render_type < 0);
     printf("\nYou choose render type %d\n\n", type);
     printf("Here is the level you have to beat, good lock !\n\n");
-    level_render();
+    level_render(0);
 
     char pause;
     scanf("%c", &pause);
     scanf("%c", &pause);
 }
 
-void level_render()
+void level_render(int padding)
 {
-    if (!VERBOSE)
+    if (!VERBOSE && padding)
         for (int i = 0; i < 17; i++)
             printf("\n");
 

@@ -246,7 +246,7 @@ envOutput make_action(action a)
     if (render_type == RenderPlayerEnnemy)
     {
       printf("\n");
-      level_render();
+      level_render(1);
       char input;
       scanf("%c", &input);
     }

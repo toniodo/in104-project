@@ -67,7 +67,7 @@ int make_epoch()
         if (render_type <= RenderPlayerPlayer)
         {
             // add_crumbs();
-            level_render();
+            level_render(1);
             scanf("%c", &input);
             if (input == 'q')
                 break;
@@ -102,6 +102,6 @@ int make_epoch()
         prev_pos = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
-    printf("Le compteur : %d\n", cpt);
+    printf("Nombre total d'itérations : %d\n", cpt);
     return 1;
 }

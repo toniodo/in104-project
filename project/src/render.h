@@ -13,7 +13,7 @@ enum render_type
 enum render_type render_type;
 
 void start_render();
-void level_render();
+void level_render(int padding);
 
 void add_crumbs();
 void remove_crumbs();
