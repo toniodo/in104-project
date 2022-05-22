@@ -152,10 +152,12 @@ void print_q_matrix()
                     printf("° ");
                 else if (visited[i % rows][j % cols] == wall)
                     printf("^ ");
-                else if (a >= 0 && a < 10)
-                    printf("%.0f ", a);
-                else if (a < 10)
+                else if (a <= 0 && a > -10)
+                    printf("%.0f ", -a);
+                else if (a < -10)
                     printf("- ");
+                else if (a < 10)
+                    printf(". ");
                 else
                     printf("x ");
             }
