@@ -7,17 +7,17 @@ struct ennemy
   int row;
   int col;
   action last_move;
-  int index;
+  int dead;
 };
 
 typedef struct ennemy ennemy;
 int nbr_ennemies;
 ennemy *ennemies;
 
-void move_ennemies();
-void move_ennemy(ennemy *ennemy);
-void kill_ennemy(ennemy *ennemy);
-void kill();
+void move_ennemies(int *is_player_dead);
+void move_ennemy(ennemy *ennemy, int *is_player_dead);
+void kill_ennemy(int i);
+void kill(int p_row, int p_col);
 void populate_ennemies();
 
 #endif

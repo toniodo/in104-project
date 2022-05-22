@@ -3,10 +3,21 @@
 
 #include "environment.h"
 
-void level_render();
+enum render_type
+{
+  RenderPlayerEnnemy, // player then ennemy
+  RenderPlayerPlayer, // player then player
+  RenderEpochs        // render only after epochs
+};
+
+enum render_type render_type;
+
+void start_render();
+void level_render(int padding);
 
 void add_crumbs();
-
 void remove_crumbs();
+
+void print_action(action act);
 
 #endif

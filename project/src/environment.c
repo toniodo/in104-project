@@ -2,6 +2,7 @@
 #include "environment.h"
 #include "ennemies.h"
 #include "utils.h"
+#include "render.h"
 
 void alloc_level()
 {
@@ -197,6 +198,8 @@ envOutput make_action(action a)
   }
 
   int tile = visited[new_row][new_col];
+  if VERBOSE
+    printf("tile : %d\n", tile);
   switch (tile)
   {
   case goal:
@@ -210,20 +213,27 @@ envOutput make_action(action a)
     reward = -0.1;
     break;
 
-  case crumb:
-    reward = -0.01;
-    player_col = new_col;
-    player_row = new_row;
-    break;
-
   case entity:
+    if VERBOSE
+      printf("Encounter entity\n");
     // kill -> break, but death -> fall throught
+    if (previous_action == nbr_actions)
+    {
+      printf("Goomba killed !\n");
+      kill(new_row, new_col);
+      reward = 0.5;
+      player_col = new_col;
+      player_row = new_row;
+      break;
+    }
   case death:
+    dead = 1;
     reward = -1;
     player_col = new_col;
     player_row = new_row;
   case teleporter1:
   case teleporter2:
+  case crumb:
   default:
     // act like a discharge, force to explore
     reward = -0.01;
@@ -231,18 +241,37 @@ envOutput make_action(action a)
     player_row = new_row;
   }
 
+  if (!dead && nbr_ennemies)
+  {
+    if (render_type == RenderPlayerEnnemy)
+    {
+      printf("\n");
+      level_render(1);
+      char input;
+      scanf("%c", &input);
+    }
+
+    //------------
+    // Environment turn
+    //------------
+
+    int is_player_dead = 0;
+    move_ennemies(&is_player_dead);
+    if (is_player_dead)
+    {
+      reward -= 1;
+      dead = 1;
+    }
+  }
+  //------------
+  // END
+  //------------
+
   stepOut.reward = reward;
   stepOut.done = done;
   stepOut.dead = dead;
   stepOut.ennemy = ennemy;
-  //------------
-  // Environment turn
-  //------------
-  move_ennemies();
 
-  //------------
-  // END
-  //------------
   return stepOut;
 }
 
@@ -252,11 +281,6 @@ void gravity(int *new_row, int *new_col)
   int c;
   switch (previous_action)
   {
-  // case free fall
-  case nbr_actions:
-  case up:
-    *new_row = r;
-    break;
   case up_left:
     c = max(0, *new_col - 1);
     if (visited[r][c] == wall)
@@ -291,9 +315,14 @@ void gravity(int *new_row, int *new_col)
       *new_row = r;
     }
     break;
+
+  // case free fall
   default:
+    *new_row = r;
     break;
   }
   // free fall
+  if VERBOSE
+    printf("falling\n");
   previous_action = nbr_actions;
 }

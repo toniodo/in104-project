@@ -21,3 +21,6 @@ clean_objects:
 
 clean: clean_objects
 	@rm -rf $(BINS)
+
+debug: main
+	gdb main
