@@ -281,11 +281,6 @@ void gravity(int *new_row, int *new_col)
   int c;
   switch (previous_action)
   {
-  // case free fall
-  case nbr_actions:
-  case up:
-    *new_row = r;
-    break;
   case up_left:
     c = max(0, *new_col - 1);
     if (visited[r][c] == wall)
@@ -320,7 +315,10 @@ void gravity(int *new_row, int *new_col)
       *new_row = r;
     }
     break;
+
+  // case free fall
   default:
+    *new_row = r;
     break;
   }
   // free fall
