@@ -46,10 +46,10 @@ int make_epoch()
     // initialisation index of start position
     player_row = start_row;
     player_col = start_col;
-    int prev_pos = pos_from_coord(player_row, player_col);
+    int prev_state = state(ennemies);
     int new_state;
     // initialisation of action
-    int act = policy_greedy(prev_pos, qfunction[prev_pos]);
+    int act = policy_greedy(prev_state, qfunction[prev_state]);
     int new_act;
     double reward;
     // set input
@@ -79,10 +79,8 @@ int make_epoch()
         // choose action according to policy
         new_act = policy_greedy(new_state, qfunction[new_state]);
         // Using Sarsa
-        qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_pos][act]);
-        // printf("\nNotre valeur de Q : %.2f", qfunction[prev_pos][act]);
-        //  printf("%f\n", qfunction[state][act]);
-        //  printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], nbr_actions,false));
+        qfunction[prev_state][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_state][act]);
+
         if (stepOutput.done)
         {
             printf("Je suis arrivé !\n");
@@ -99,7 +97,7 @@ int make_epoch()
         cpt++;
         ennemies = stepOutput.ennemy;
         act = new_act;
-        prev_pos = new_state;
+        prev_state = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
     printf("Nombre total d'itérations : %d\n", cpt);
