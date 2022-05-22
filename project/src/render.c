@@ -3,6 +3,23 @@
 #include <stdbool.h>
 #include "utils.h"
 
+void start_render()
+{
+    for (int i = 0; i < 6; i++)
+        printf("\n");
+
+    printf("\t         ___    __         ___ \n");
+    printf("\t|\\  /|  |   |  |   \\   |  /   \\\n");
+    printf("\t| \\/ |  |___|  |__ /   |  |   |\n");
+    printf("\t|    |  |   |  |   \\   |  |   |\n");
+    printf("\t|    |  |   |  |    \\  |  \\___/\n");
+    printf("\n\n\n");
+    printf("\t    Press any key to play\n\n");
+    printf("\n\n\n");
+    char input;
+    scanf("%c", &input);
+}
+
 void level_render()
 {
     if (!VERBOSE)

@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
   // initialize time
   srand(time(0));
   reset_level();
+  start_render();
   level_render();
   q_alloc();
   q_initialisation();
