@@ -33,7 +33,8 @@ int main(int argc, char *argv[])
     make_epoch();
     // complete maze with crumbs and print it
     // add_crumbs();
-    print_q_matrix();
+    if VERBOSE
+      print_q_matrix();
     level_render(0);
     // Waiting for an action
     scanf("%c", &input);

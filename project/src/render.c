@@ -144,19 +144,23 @@ void print_q_matrix()
         printf("%d\n", i % rows);
         for (int k = 0; k < nbr_actions; k++)
         {
-            print_action(k);
-            printf("  ");
-            for (int j = 0; j < 2 * cols; j++)
+            for (int j = 0; j < cols; j++)
             {
 
-                int a = 10 * qfunction[state(i % rows, j % cols, (int)i / rows)][k];
-                if (a >= 0 && a < 10)
-                    printf("%d", a);
+                double a = 10 * qfunction[state(i % rows, j % cols, (int)i / rows)][k];
+                if (visited[i % rows][j % cols] == death)
+                    printf("° ");
+                else if (visited[i % rows][j % cols] == wall)
+                    printf("^ ");
+                else if (a >= 0 && a < 10)
+                    printf("%.0f ", a);
                 else if (a < 10)
-                    printf("-");
+                    printf("- ");
                 else
-                    printf("x");
+                    printf("x ");
             }
+            printf("  ");
+            print_action(k);
             printf("\n");
         }
         // printf("\n");

@@ -231,11 +231,15 @@ envOutput make_action(action a)
     player_col = new_col;
     player_row = new_row;
   case teleporter1:
+    reward = 0.5;
+    player_col = new_col;
+    player_row = new_row;
   case teleporter2:
   case crumb:
   default:
     // act like a discharge, force to explore
-    reward = -0.01;
+    reward = linear_reward(-0.1, 0, cols, new_col);
+    printf("reward : %.3f", reward);
     player_col = new_col;
     player_row = new_row;
   }
@@ -326,4 +330,10 @@ void gravity(int *new_row, int *new_col)
   if (VERBOSE && render_type <= RenderPlayerPlayer)
     printf("falling\n");
   previous_action = nbr_actions;
+}
+
+double linear_reward(double min_reward, double max_reward, int N, int val)
+{
+  double step = (max_reward - min_reward) / (double)N;
+  return min_reward + step * val;
 }
