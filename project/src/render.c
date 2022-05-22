@@ -5,6 +5,7 @@
 
 void start_render()
 {
+    // Start Page
     for (int i = 0; i < 6; i++)
         printf("\n");
 
@@ -18,6 +19,34 @@ void start_render()
     printf("\n\n\n");
     char input;
     scanf("%c", &input);
+
+    // Select Level Page
+    printf("Select the level you want to play :\n");
+    printf("(1) Level 1\n");
+    printf("(2) Level 2\n");
+    printf("(3) Level 3\n");
+    printf("(4) Level 4\n\n");
+    scanf(" %c", &input);
+
+    // Select Render Type
+    printf("\n\nYou choose Level %c\n\n", input);
+    printf("Please select the render type :\n");
+    printf("(1) Display each turn of the player and the ennemies\n");
+    printf("(2) Display each turn of the player only\n");
+    printf("(3) Display after epoch only\n\n");
+    int type;
+    do
+    {
+        scanf("%d", &type);
+        render_type = type - 1;
+    } while (render_type > 3 && render_type < 0);
+    printf("\nYou choose render type %d\n\n", type);
+    printf("Here is the level you have to beat, good lock !\n\n");
+    level_render();
+
+    char pause;
+    scanf("%c", &pause);
+    scanf("%c", &pause);
 }
 
 void level_render()

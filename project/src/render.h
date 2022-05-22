@@ -5,10 +5,12 @@
 
 enum render_type
 {
-  RenderPlayerPlayer, // player then player
   RenderPlayerEnnemy, // player then ennemy
+  RenderPlayerPlayer, // player then player
   RenderEpochs        // render only after epochs
 };
+
+enum render_type render_type;
 
 void start_render();
 void level_render();

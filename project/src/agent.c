@@ -63,7 +63,10 @@ int make_epoch()
         {
             printf("action taken : %d -> ", (action)act);
             print_action(act);
-            add_crumbs();
+        }
+        if (render_type <= RenderPlayerPlayer)
+        {
+            // add_crumbs();
             level_render();
             scanf("%c", &input);
             if (input == 'q')

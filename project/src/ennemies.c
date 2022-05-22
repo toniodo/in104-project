@@ -58,8 +58,11 @@ void move_ennemy(ennemy *ennemy, int *is_player_dead)
         }
         else
         {
-            printf("Not implemented : %d -> ", ennemy->last_move);
-            print_action(ennemy->last_move);
+            if VERBOSE
+            {
+                printf("Not implemented : %d -> ", ennemy->last_move);
+                print_action(ennemy->last_move);
+            }
         }
     }
 
@@ -97,7 +100,8 @@ void kill(int p_row, int p_col)
         ennemy *e = ennemies + i;
         if (e->row == p_row && e->col == p_col)
         {
-            printf("ennemy found");
+            if VERBOSE
+                printf("ennemy found");
             kill_ennemy(i);
         }
     }

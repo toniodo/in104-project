@@ -214,7 +214,8 @@ envOutput make_action(action a)
     break;
 
   case entity:
-    printf("Encounter entity\n");
+    if VERBOSE
+      printf("Encounter entity\n");
     // kill -> break, but death -> fall throught
     if (previous_action == nbr_actions)
     {
@@ -242,11 +243,13 @@ envOutput make_action(action a)
 
   if (!dead && nbr_ennemies)
   {
-
-    printf("\n");
-    level_render();
-    char input;
-    scanf("%c", &input);
+    if (render_type == RenderPlayerEnnemy)
+    {
+      printf("\n");
+      level_render();
+      char input;
+      scanf("%c", &input);
+    }
 
     //------------
     // Environment turn
