@@ -31,7 +31,7 @@ void start_render()
     // Select Render Type
     printf("\n\nYou choose Level %c\n\n", input);
     printf("Please select the render type :\n");
-    printf("(1) Display each turn of the player and the ennemies\n");
+    printf("(1) Display each turn of the player and the enemies\n");
     printf("(2) Display each turn of the player only\n");
     printf("(3) Display after epoch only\n\n");
     int type;

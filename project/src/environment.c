@@ -1,6 +1,6 @@
 #include <string.h>
 #include "environment.h"
-#include "ennemies.h"
+#include "enemies.h"
 #include "utils.h"
 #include "render.h"
 
@@ -95,7 +95,7 @@ void make_level(char *file_name)
 void init_visited()
 {
   alloc_visited();
-  nbr_ennemies = 0;
+  nbr_enemies = 0;
 
   int i, j;
   for (i = 0; i < rows; ++i)
@@ -115,7 +115,7 @@ void init_visited()
         break;
       case 'e':
         visited[i][j] = entity;
-        nbr_ennemies++;
+        nbr_enemies++;
         break;
       case 'd':
         visited[i][j] = death;
@@ -132,7 +132,7 @@ void init_visited()
     }
   }
 
-  populate_ennemies();
+  populate_enemies();
 }
 
 // need allocations before
@@ -159,7 +159,6 @@ envOutput make_action(action a)
   double reward = 0;
   int done = 0;
   int dead = 0;
-  int ennemy = 0;
   envOutput stepOut;
 
   int new_col = player_col;
@@ -178,14 +177,14 @@ envOutput make_action(action a)
       break;
 
     case up_left:
-      // up + falling throught
+      // up + falling through
       new_row = max(0, new_row - 1);
     case left:
       new_col = max(0, new_col - 1);
       break;
 
     case up_right:
-      // up + falling throught
+      // up + falling through
       new_row = max(0, new_row - 1);
     case right:
       new_col = min(cols - 1, new_col + 1);
@@ -216,14 +215,14 @@ envOutput make_action(action a)
   case entity:
     if VERBOSE
       printf("Encounter entity\n");
-    // kill -> break, but death -> fall throught
+    // kill -> break, but death -> fall through
     if (previous_action == nbr_actions)
     {
-      printf("Goomba killed !\n");
-      kill(new_row, new_col);
       reward = 0.5;
       player_col = new_col;
       player_row = new_row;
+      printf("Goomba killed !\n");
+      kill();
       break;
     }
   case death:
@@ -241,9 +240,9 @@ envOutput make_action(action a)
     player_row = new_row;
   }
 
-  if (!dead && nbr_ennemies)
+  if (!dead && nbr_enemies)
   {
-    if (render_type == RenderPlayerEnnemy)
+    if (render_type == RenderPlayerEnemy)
     {
       printf("\n");
       level_render(1);
@@ -256,7 +255,7 @@ envOutput make_action(action a)
     //------------
 
     int is_player_dead = 0;
-    move_ennemies(&is_player_dead);
+    move_enemies(&is_player_dead);
     if (is_player_dead)
     {
       reward -= 1;
@@ -267,10 +266,12 @@ envOutput make_action(action a)
   // END
   //------------
 
+  // Check if ennemy is near
+
   stepOut.reward = reward;
   stepOut.done = done;
   stepOut.dead = dead;
-  stepOut.ennemy = ennemy;
+  stepOut.enemy = is_enemy_near_player(1);
 
   return stepOut;
 }

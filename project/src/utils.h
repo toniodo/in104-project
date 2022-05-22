@@ -21,6 +21,6 @@ void coord_from_state(int state, int *row, int *col);
 
 void pos_from_state(int state, int *row, int *col);
 
-int state(bool ennemies);
+int state(bool enemies);
 
 #endif

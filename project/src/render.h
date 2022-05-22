@@ -5,7 +5,7 @@
 
 enum render_type
 {
-  RenderPlayerEnnemy, // player then ennemy
+  RenderPlayerEnemy,  // player then enemy
   RenderPlayerPlayer, // player then player
   RenderEpochs        // render only after epochs
 };
