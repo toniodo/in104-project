@@ -231,6 +231,9 @@ envOutput make_action(action a)
     player_col = new_col;
     player_row = new_row;
   case teleporter1:
+    reward = 0.5;
+    player_col = new_col;
+    player_row = new_row;
   case teleporter2:
   case crumb:
   default:
