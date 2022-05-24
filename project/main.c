@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     // add_crumbs();
     if VERBOSE
       print_q_matrix();
-    level_render(0);
+    level_render(1);
     // Waiting for an action
     scanf("%c", &input);
   }

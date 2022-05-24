@@ -239,7 +239,6 @@ envOutput make_action(action a)
   default:
     // act like a discharge, force to explore
     reward = linear_reward(-0.1, 0, cols, new_col);
-    printf("reward : %.3f", reward);
     player_col = new_col;
     player_row = new_row;
   }
