@@ -60,7 +60,7 @@ struct envOutput
   double reward;
   int done;
   int dead;
-  int ennemy;
+  int enemy;
 };
 
 typedef struct envOutput envOutput;
@@ -75,5 +75,5 @@ void reset_level();
 // make action to the environment
 envOutput make_action(action a);
 void gravity(int *new_row, int *new_col);
-
+double linear_reward(double min_reward, double max_reward, int N, int val);
 #endif

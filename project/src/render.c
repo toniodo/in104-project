@@ -31,7 +31,7 @@ void start_render()
     // Select Render Type
     printf("\n\nYou choose Level %c\n\n", input);
     printf("Please select the render type :\n");
-    printf("(1) Display each turn of the player and the ennemies\n");
+    printf("(1) Display each turn of the player and the enemies\n");
     printf("(2) Display each turn of the player only\n");
     printf("(3) Display after epoch only\n\n");
     int type;
@@ -127,10 +127,45 @@ void remove_crumbs()
 
 void print_action(action act)
 {
-    printf("%s\n", act == 0   ? "left"
-                   : act == 1 ? "right"
-                   : act == 2 ? "up"
-                   : act == 3 ? "up_left"
-                   : act == 4 ? "up_right"
-                              : "falling");
+    printf("%s", act == 0   ? "left    "
+                 : act == 1 ? "right   "
+                 : act == 2 ? "up      "
+                 : act == 3 ? "up_left "
+                 : act == 4 ? "up_right"
+                            : "falling ");
+}
+
+void print_q_matrix()
+{
+    for (int i = 0; i < 2 * rows; i++)
+    {
+        if (i == rows)
+            printf("____________________________\n");
+        printf("%d\n", i % rows);
+        for (int k = 0; k < nbr_actions; k++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+
+                double a = 10 * qfunction[state(i % rows, j % cols, (int)i / rows)][k];
+                if (visited[i % rows][j % cols] == death)
+                    printf("° ");
+                else if (visited[i % rows][j % cols] == wall)
+                    printf("^ ");
+                else if (a <= 0 && a > -10)
+                    printf("%.0f ", -a);
+                else if (a < -10)
+                    printf("- ");
+                else if (a < 10)
+                    printf(". ");
+                else
+                    printf("x ");
+            }
+            printf("  ");
+            print_action(k);
+            printf("\n");
+        }
+        // printf("\n");
+    }
+    printf("\n\n");
 }

@@ -5,7 +5,7 @@
 
 enum render_type
 {
-  RenderPlayerEnnemy, // player then ennemy
+  RenderPlayerEnemy,  // player then enemy
   RenderPlayerPlayer, // player then player
   RenderEpochs        // render only after epochs
 };
@@ -19,5 +19,6 @@ void add_crumbs();
 void remove_crumbs();
 
 void print_action(action act);
+void print_q_matrix();
 
 #endif

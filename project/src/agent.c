@@ -5,7 +5,7 @@
 #include "render.h"
 
 void q_alloc()
-{ // Make an array for all possible states (position with presence of ennemy)
+{ // Make an array for all possible states (position with presence of enemy)
     qfunction = malloc(rows * cols * 2 * sizeof(double *));
     for (int i = 0; i < rows * cols * 2; i++)
     {
@@ -40,16 +40,16 @@ int make_epoch()
     double gamma = 0.8;
     double alpha = 0.8;
     int max_step = 200;
-    bool ennemies = false;
+    bool enemies = false;
     // initialisation of a counter
     int cpt = 0;
     // initialisation index of start position
     player_row = start_row;
     player_col = start_col;
-    int prev_pos = pos_from_coord(player_row, player_col);
+    int prev_state = state(player_row, player_col, enemies);
     int new_state;
     // initialisation of action
-    int act = policy_greedy(prev_pos, qfunction[prev_pos]);
+    int act = policy_greedy(prev_state, qfunction[prev_state]);
     int new_act;
     double reward;
     // set input
@@ -59,10 +59,12 @@ int make_epoch()
         // printf("%d\n", act);
         //  execute the previous action
         stepOutput = make_action(act);
-        if VERBOSE
+        if (VERBOSE && render_type <= RenderPlayerPlayer)
         {
             printf("action taken : %d -> ", (action)act);
             print_action(act);
+            printf("\n");
+            print_q_matrix();
         }
         if (render_type <= RenderPlayerPlayer)
         {
@@ -73,16 +75,15 @@ int make_epoch()
                 break;
         }
         // save new state
-        new_state = state(ennemies);
+        enemies = stepOutput.enemy;
+        new_state = state(player_row, player_col, enemies);
         // Observe reward
         reward = stepOutput.reward;
         // choose action according to policy
         new_act = policy_greedy(new_state, qfunction[new_state]);
         // Using Sarsa
-        qfunction[prev_pos][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_pos][act]);
-        // printf("\nNotre valeur de Q : %.2f", qfunction[prev_pos][act]);
-        //  printf("%f\n", qfunction[state][act]);
-        //  printf("Le maximum des nouvelles actions vaut %f", maxlist(qfunction[new_state], nbr_actions,false));
+        qfunction[prev_state][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_state][act]);
+
         if (stepOutput.done)
         {
             printf("Je suis arrivé !\n");
@@ -97,9 +98,8 @@ int make_epoch()
         else
             visited[player_row][player_col] = crumb;
         cpt++;
-        ennemies = stepOutput.ennemy;
         act = new_act;
-        prev_pos = new_state;
+        prev_state = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
     printf("Nombre total d'itérations : %d\n", cpt);
