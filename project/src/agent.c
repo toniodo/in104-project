@@ -54,7 +54,7 @@ int make_epoch()
     double reward;
     // set input
     char input = 'y';
-    while (move < max_step)
+    while (move < max_step && (input == 'y' || input == '\n'))
     {
         // printf("%d\n", act);
         //  execute the previous action
