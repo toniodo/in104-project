@@ -4,8 +4,8 @@ Ce dossier contient l'exemple fait en TD du labyrinthe résolu avec les différe
 
 ## Lancement du répertoire
 
-- `make start` pour lancer le projet
-- `make` pour compiler
+- `make start` pour lancer le projet principal (q-learning simple)
+- `make` pour compiler les différentes versions
 - `make clean_objects` pour supprimer les fichiers objects et `make clean` pour supprimer en plus les fichiers binaires
 - Les différents fichiers exécutables résultant de la compilation renvoient vers les différentes méthodes de qlearning : `solveur` qui utilise la méthode de Q-learning classique, `solveur2` qui utilise la méthode de double Q-learning et enfin `sarsa` qui utilise la méthode du SARSA.
 
