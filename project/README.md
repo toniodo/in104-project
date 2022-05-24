@@ -13,6 +13,14 @@
 
 - Sur la page d'accueil du jeu, la ou il y a marqué de presser n'importe quel bouton, si vous entrez le caractère `v`, cela activera les paramètres de Verbose avec entre autre des détails sur la matrice Q (ordre de grandeur des valeurs...).
 
+### Personnalisation
+
+- Une fois la page d'accueil passée, le programme vous propose de choisir un niveau, qui sont classé dans l'ordre décrit plus bas dans la rubrique _/levels_.
+- La deuxieme option permet de choisir le type de tour qui sera effectué :
+  - Du tour par tour, le tour du joueur puis le tour de l'environnement (les ennemies).
+  - Du tour par tour mais uniquement les tours du joueurs
+  - Des générations par génération qui permet de voir le parcours total du joueur en une fois.
+
 ## Details du projet
 
 - le fichier **main.c** contient l'entrée du programme
