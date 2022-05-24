@@ -48,13 +48,18 @@ int make_epoch()
     int prev_state = state(player_row, player_col, 0);
     int new_state;
     // initialisation of action
-    int act = policy_greedy(prev_state, qfunction[prev_state]);
+    int act;
     double reward;
     // set input
     char input = 'y';
     while (cpt < max_step)
     {
         act = policy_greedy(prev_state, qfunction[prev_state]);
+        if ((act == up_left) || (act == up_right))
+        {
+            state_up = prev_state;
+            act_up = act;
+        }
         // printf("%d\n", act);
         //  execute the previous action
         stepOutput = make_action(act);
@@ -87,6 +92,12 @@ int make_epoch()
         }
         else if (stepOutput.dead)
         {
+            if ((level[player_row][player_col] == 'd') && ((player_col <= 3 + (state_up % (rows * cols)) % cols) || (player_col >= -3 + (state_up % (rows * cols)) % cols)))
+            {
+                qfunction[state_up][act_up] += alpha * (-1 + gamma * maxlist(qfunction[new_state], nbr_actions, false) - qfunction[state_up][act_up]);
+                printf("Y'a un trou !!!!");
+            }
+
             printf("Game Over !\n");
             break;
         }

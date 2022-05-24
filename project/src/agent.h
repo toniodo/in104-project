@@ -14,7 +14,10 @@ void q_alloc();
 
 void q_initialisation();
 
+int state_up;
+int act_up;
+
 #define VERBOSE (true)
-#define LEVEL ("basefree")
+#define LEVEL ("base")
 
 #endif
