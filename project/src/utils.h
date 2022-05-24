@@ -23,4 +23,6 @@ void pos_from_state(int state, int *row, int *col);
 
 int state(int row, int col, bool enemies);
 
+void free_alloc();
+
 #endif

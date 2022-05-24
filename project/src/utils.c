@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "environment.h"
 #include "agent.h"
+#include "enemies.h"
 
 int min(int a, int b)
 {
@@ -94,4 +95,19 @@ void coord_from_state(int state, int *row, int *col)
 int state(int row, int col, bool enemies)
 {
     return pos_from_coord(row, col) + (enemies ? rows * cols : 0);
+}
+
+void free_alloc()
+{ /*
+     for (int i = 2 * rows * cols - 1; i >= 0; i--)
+         free(qfunction[i]);
+    free(qfunction);
+    free(enemies);
+    for (int i = 0; i < rows * cols; i++)
+        free(level[i]);
+    free(level);
+    for (int i = 0; i < rows * cols; i++)
+        free(visited[i]);
+    free(visited);*/
+    // free(LEVEL);
 }

@@ -5,6 +5,7 @@
 #include "./src/agent.h"
 #include "./src/environment.h"
 #include "./src/render.h"
+#include "./src/utils.h"
 
 int main(int argc, char *argv[])
 {
