@@ -7,6 +7,8 @@
 #include <stdbool.h>
 
 double **qfunction;
+int max_step;
+int move;
 
 int make_epoch();
 

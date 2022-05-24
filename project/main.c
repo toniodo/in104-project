@@ -30,12 +30,14 @@ int main(int argc, char *argv[])
     }
     // level_render();
     //  learn
-    make_epoch();
+    int success = make_epoch();
     // complete maze with crumbs and print it
     // add_crumbs();
     if VERBOSE
       print_q_matrix();
     level_render(1);
+
+    end_render(success);
     // Waiting for an action
     scanf("%c", &input);
   }

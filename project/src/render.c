@@ -6,7 +6,7 @@
 void start_render()
 {
     // Start Page
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 20; i++)
         printf("\n");
 
     printf("\t         ___    __         ___ \n");
@@ -16,7 +16,8 @@ void start_render()
     printf("\t|    |  |   |  |    \\  |  \\___/\n");
     printf("\n\n\n");
     printf("\t    Press any key to play\n\n");
-    printf("\n\n\n");
+    for (int i = 0; i < 10; i++)
+        printf("\n");
     char input;
     scanf("%c", &input);
 
@@ -43,6 +44,8 @@ void start_render()
     printf("\nYou choose render type %d\n\n", type);
     printf("Here is the level you have to beat, good lock !\n\n");
     level_render(0);
+    for (int i = 0; i < 4; i++)
+        printf("\n");
 
     char pause;
     scanf("%c", &pause);
@@ -52,7 +55,7 @@ void start_render()
 void level_render(int padding)
 {
     if (!VERBOSE && padding)
-        for (int i = 0; i < 17; i++)
+        for (int i = 0; i < 9; i++)
             printf("\n");
 
     if VERBOSE
@@ -80,7 +83,31 @@ void level_render(int padding)
         }
         printf("\n");
     }
-    printf("\n");
+
+    if (!VERBOSE && padding)
+        for (int i = 0; i < 8; i++)
+            printf("\n");
+    else
+        printf("\n");
+}
+
+void end_render(int success)
+{
+    switch (success)
+    {
+    // death
+    case 0:
+        printf("\n\nGAME OVER !\nTry again ! You died after the %dth move\n\n", move);
+        break;
+    // success
+    case 1:
+        printf("\n\nWell Done !!!\nYou reach the end of the level in only %d moves!\nYou can restart the game to try another level\n\n", move);
+    // nmax
+    case 2:
+    default:
+        printf("\n\nYou reach the number max of move : %d\n\n", max_step);
+        break;
+    }
 }
 
 void add_crumbs()
