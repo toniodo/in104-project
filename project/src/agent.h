@@ -16,7 +16,4 @@ void q_alloc();
 
 void q_initialisation();
 
-#define VERBOSE (false)
-#define LEVEL ("basefree")
-
 #endif

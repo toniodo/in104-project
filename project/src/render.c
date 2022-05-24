@@ -1,3 +1,4 @@
+#include <string.h>
 #include "render.h"
 #include "agent.h"
 #include <stdbool.h>
@@ -20,6 +21,7 @@ void start_render()
         printf("\n");
     char input;
     scanf("%c", &input);
+    VERBOSE = input == 'v' ? 1 : 0;
 
     // Select Level Page
     printf("Select the level you want to play :\n");
@@ -27,10 +29,21 @@ void start_render()
     printf("(2) Level 2\n");
     printf("(3) Level 3\n");
     printf("(4) Level 4\n\n");
-    scanf(" %c", &input);
+    int l;
+    do
+    {
+        scanf(" %d", &l);
+    } while (l > 4 && l < 0);
+    printf("\n\nYou choose Level %d\n\n", l);
+    LEVEL = malloc(25 * sizeof(char));
+    LEVEL = strcat(LEVEL, "./levels/");
+    LEVEL = strcat(LEVEL, l == 1   ? "test"
+                          : l == 3 ? "base"
+                          : l == 4 ? "basehole"
+                                   : "basefree");
+    LEVEL = strcat(LEVEL, ".txt");
 
     // Select Render Type
-    printf("\n\nYou choose Level %c\n\n", input);
     printf("Please select the render type :\n");
     printf("(1) Display each turn of the player and the enemies\n");
     printf("(2) Display each turn of the player only\n");
@@ -42,7 +55,8 @@ void start_render()
         render_type = type - 1;
     } while (render_type > 3 && render_type < 0);
     printf("\nYou choose render type %d\n\n", type);
-    printf("Here is the level you have to beat, good lock !\n\n");
+    printf("Here is the level you have to beat, good luck !\n\n");
+    reset_level();
     level_render(0);
     for (int i = 0; i < 4; i++)
         printf("\n");
@@ -58,7 +72,7 @@ void level_render(int padding)
         for (int i = 0; i < 9; i++)
             printf("\n");
 
-    if VERBOSE
+    if (VERBOSE)
     {
         printf("\n");
         for (int i = 0; i < rows; i++)
@@ -131,7 +145,7 @@ void add_crumbs()
     printf("\n");
     */
     // level[player_row][player_col] = '@';
-    if VERBOSE
+    if (VERBOSE)
         printf("%d ", pos_from_coord(player_row, player_col));
 
     level[start_row][start_col] = 's';

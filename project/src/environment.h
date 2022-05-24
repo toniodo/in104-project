@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+char *LEVEL;
+int VERBOSE;
+
 char **level;
 int **visited;
 int rows;
