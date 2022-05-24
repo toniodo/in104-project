@@ -92,7 +92,7 @@ int make_epoch()
         }
         else if (stepOutput.dead)
         {
-            if ((level[player_row][player_col] == 'd') && ((player_col <= 3 + (state_up % (rows * cols)) % cols) || (player_col >= -3 + (state_up % (rows * cols)) % cols)))
+            if ((level[player_row][player_col] == 'd') && ((player_col == -2 + (state_up % (rows * cols)) % cols) || (player_col == 2 + (state_up % (rows * cols)) % cols)))
             {
                 qfunction[state_up][act_up] += alpha * (-1 + gamma * maxlist(qfunction[new_state], nbr_actions, false) - qfunction[state_up][act_up]);
                 printf("Y'a un trou !!!!");
