@@ -128,7 +128,7 @@ int main()
 {
     srand(time(0));
     // create maze from file
-    maze_make("maze.txt");
+    maze_make("levels/maze.txt");
 
     // initialise qlearning matrix
     q_alloc();

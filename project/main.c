@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
 {
   // initialize time
   srand(time(0));
-  reset_level();
   start_render();
   q_alloc();
   q_initialisation();
@@ -24,19 +23,21 @@ int main(int argc, char *argv[])
     reset_level();
     remove_crumbs();
     // print maze
-    if VERBOSE
+    if (VERBOSE)
     {
       printf("rows %d | cols %d \n", rows, cols);
       printf("number of actions : %d \n", nbr_actions);
     }
     // level_render();
     //  learn
-    make_epoch();
+    int success = make_epoch();
     // complete maze with crumbs and print it
     // add_crumbs();
-    if VERBOSE
+    if (VERBOSE)
       print_q_matrix();
     level_render(1);
+
+    end_render(success);
     // Waiting for an action
     scanf("%c", &input);
   }

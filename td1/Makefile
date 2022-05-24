@@ -30,4 +30,4 @@ clean_objects:
 	@rm -rf *.o
 
 clean: clean_objects
-	@rm -rf solveur dfs solveur2 sarsa
+	@rm -rf $(BINS)

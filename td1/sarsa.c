@@ -44,25 +44,25 @@ int qlearning()
     int cpt = 0;
     // initialisation index of start position
     state_row = start_row;
-    state_col = state_col;
+    state_col = start_col;
     int prev_state = state_from_pos(state_row, state_col);
     int new_state;
     // initialisation of action
-    int act = 0;
-    double reward = 0;
+    int act = policy_greedy(prev_state, qfunction[prev_state]);
+    int new_act;
+    double reward;
     while (cpt < max_step)
     {
-        // save previous state
-        prev_state = state_from_pos(state_row, state_col);
-        // action according to policy
-        act = policy_greedy(prev_state, qfunction[prev_state]);
-        // printf("%d\n", act);
-        //  response created by the action taken
+        //  execute the action
         stepOutput = maze_step(act);
+        // Observe the reward
         reward = stepOutput.reward;
-        // printf("J'ai gagné une récompense de %.2f\n", reward);
+        // save new state
         new_state = state_from_pos(state_row, state_col);
-        qfunction[prev_state][act] += alpha * (reward + gamma * qfunction[new_state][act] - qfunction[prev_state][act]);
+        // action according to policy
+        new_act = policy_greedy(new_state, qfunction[new_state]);
+        // printf("%d\n", act);
+        qfunction[prev_state][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_state][act]);
         // printf("test : %.3f\n", update);
         // printf("%f\n", maxlist(qfunction[new_state], number_actions, true));
         // printf("\nNotre valeur de Q : %.2f", qfunction[prev_state][act]);
@@ -79,6 +79,8 @@ int qlearning()
             visited[stepOutput.new_row][stepOutput.new_col] = crumb;
         }
         cpt++;
+        prev_state = new_state;
+        act = new_act;
         // show_matrix(qfunction, rows * cols - 1, number_actions);
     }
     printf("Le compteur : %d\n", cpt);
@@ -120,7 +122,7 @@ int main()
 {
     srand(time(0));
     // create maze from file
-    maze_make("maze.txt");
+    maze_make("./levels/maze.txt");
 
     // initialise qlearning matrix
     q_alloc();

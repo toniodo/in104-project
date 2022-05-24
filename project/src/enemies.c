@@ -79,7 +79,7 @@ void move_enemy(enemy *enemy, int *is_player_dead)
         }
         else
         {
-            if VERBOSE
+            if (VERBOSE)
             {
                 printf("Not implemented : %d -> ", enemy->last_move);
                 print_action(enemy->last_move);
@@ -107,7 +107,7 @@ void move_enemies(int *is_player_dead)
 void kill_enemy(int i)
 {
     enemy *e = enemies + i;
-    if VERBOSE
+    if (VERBOSE)
         printf("Remove enemy %d", i);
     level[e->row][e->col] = ' ';
     visited[e->row][e->col] = unknown;
@@ -122,7 +122,7 @@ void kill()
         enemy *e = enemies + i;
         if (e->row == player_row && e->col == player_col)
         {
-            if VERBOSE
+            if (VERBOSE)
                 printf("enemy found");
             kill_enemy(i);
         }

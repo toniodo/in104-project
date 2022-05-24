@@ -1,4 +1,3 @@
-#include <string.h>
 #include "environment.h"
 #include "enemies.h"
 #include "utils.h"
@@ -138,11 +137,7 @@ void init_visited()
 // need allocations before
 void reset_level()
 {
-  // 10+15 for level size
-  char l[25 * sizeof(char)] = "./levels/";
-  strcat(l, LEVEL);
-  strcat(l, ".txt");
-  make_level(l);
+  make_level(LEVEL);
   init_visited();
   player_row = start_row;
   player_col = start_col;
@@ -213,7 +208,7 @@ envOutput make_action(action a)
     break;
 
   case entity:
-    if VERBOSE
+    if (VERBOSE)
       printf("Encounter entity\n");
     // kill -> break, but death -> fall through
     if (previous_action == nbr_actions)

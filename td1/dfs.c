@@ -54,7 +54,7 @@ void add_crumbs()
 
 int main()
 {
-    maze_make("maze.txt");
+    maze_make("./levels/maze.txt");
     init_visited();
 
     printf("%d, %d \n", rows, cols);

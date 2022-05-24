@@ -7,14 +7,13 @@
 #include <stdbool.h>
 
 double **qfunction;
+int max_step;
+int move;
 
 int make_epoch();
 
 void q_alloc();
 
 void q_initialisation();
-
-#define VERBOSE (false)
-#define LEVEL ("basefree")
 
 #endif

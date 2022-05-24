@@ -39,10 +39,10 @@ int make_epoch()
     // double eps = 0.1;
     double gamma = 0.8;
     double alpha = 0.8;
-    int max_step = 200;
+    max_step = 200;
     bool enemies = false;
     // initialisation of a counter
-    int cpt = 0;
+    move = 0;
     // initialisation index of start position
     player_row = start_row;
     player_col = start_col;
@@ -54,7 +54,7 @@ int make_epoch()
     double reward;
     // set input
     char input = 'y';
-    while (cpt < max_step)
+    while (move < max_step)
     {
         // printf("%d\n", act);
         //  execute the previous action
@@ -84,24 +84,16 @@ int make_epoch()
         // Using Sarsa
         qfunction[prev_state][act] += alpha * (reward + gamma * qfunction[new_state][new_act] - qfunction[prev_state][act]);
 
-        if (stepOutput.done)
-        {
-            printf("Je suis arrivé !\n");
-            break;
-        }
-        else if (stepOutput.dead)
-        {
-            printf("Game Over !\n");
-            break;
-        }
+        if (stepOutput.done || stepOutput.dead)
+            return stepOutput.done ? 1 : 0;
         //  actualisation of the visited matrix
         else
             visited[player_row][player_col] = crumb;
-        cpt++;
+        move++;
         act = new_act;
         prev_state = new_state;
         // show_matrix(qfunction, rows * cols - 1, nbr_actions);
     }
-    printf("Nombre total d'itérations : %d\n", cpt);
-    return 1;
+    // printf("Nombre total d'itérations : %d\n", cpt);
+    return 2;
 }
