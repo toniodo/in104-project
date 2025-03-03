@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wfatal-errors -Werror -g
+CFLAGS = -Wall -Wfatal-errors -Werror -g -fcommon
 
 DEPENDENCIES = $(wildcard src/*.c)
 BINS = main
